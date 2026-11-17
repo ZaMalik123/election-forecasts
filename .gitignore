@@ -1,0 +1,9 @@
+# Large or regenerable data stays out of git
+data/raw/
+db/*.sqlite
+db/*.sqlite-journal
+outputs/
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
