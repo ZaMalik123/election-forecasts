@@ -160,3 +160,25 @@ summary { cursor: pointer; color: var(--muted); font-size: 15px; }
 .pills { display: flex; flex-wrap: wrap; gap: 4px 10px; }
 .pills span { white-space: nowrap; }
 @media (max-width: 760px) { td .range { display: block; } }
+
+/* US map: diverging scale, deep blue (Democrat or independent certain) through a neutral middle to ruby
+   (Republican certain). The middle is neutral gray, never a third hue. */
+:root { --map-d: #17408b; --map-r: #9b111e; --map-mid: #cfcbd2; --map-none: #f4f5f7; --map-hatch: #d5dbe2; --map-edge: #ffffff; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --map-d: #4f86e8; --map-r: #e0445a; --map-mid: #6b7079; --map-none: #161c23; --map-hatch: #2a333d; --map-edge: #12171d; }
+}
+:root[data-theme="dark"] { --map-d: #4f86e8; --map-r: #e0445a; --map-mid: #6b7079; --map-none: #161c23; --map-hatch: #2a333d; --map-edge: #12171d; }
+figure.map svg { max-width: 920px; }
+.map .st { stroke: var(--map-edge); stroke-width: 1; stroke-linejoin: round; }
+.map .none { fill: url(#nohatch); }
+.map .hatch-bg { fill: var(--map-none); }
+.map .hatch-ln { stroke: var(--map-hatch); stroke-width: 1.5; }
+.map a:hover .st, .map a:focus .st { stroke: var(--ink); stroke-width: 2; }
+.map a:focus { outline: none; }
+.map .box text { font-size: 17px; font-weight: 600; fill: var(--ink); }
+.map .boxlab { font-size: 12px; fill: var(--muted); }
+.mapkey { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 10px; align-items: center; max-width: 520px; font-size: 13px; color: var(--muted); margin: 4px 0 0; }
+.mapkey .ramp { height: 12px; border-radius: 3px; background: linear-gradient(90deg, var(--map-d), var(--map-mid), var(--map-r)); }
+.mapkey .ticks { grid-column: 2; display: flex; justify-content: space-between; font-size: 12px; }
+@media (max-width: 600px) { .mapkey { grid-template-columns: 1fr 1fr; } .mapkey .ramp, .mapkey .ticks { grid-column: 1 / -1; grid-row: 2; } .mapkey .ticks { grid-row: 3; } .mapkey > span:last-of-type { text-align: right; } }
+.nokey { display: inline-block; width: 14px; height: 14px; border-radius: 2px; background: repeating-linear-gradient(45deg, var(--map-none) 0 3px, var(--map-hatch) 3px 5px); border: 1px solid var(--rule); vertical-align: -2px; margin-right: 6px; }

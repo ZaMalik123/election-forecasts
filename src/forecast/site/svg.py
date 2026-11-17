@@ -100,3 +100,58 @@ def date_range(start: str, end: str) -> str:
     if a.month == b.month:
         return f"{MONTHS[a.month - 1]} {a.day}–{b.day}"
     return f"{nice_date(start)}–{nice_date(end)}"
+
+
+_US = None
+SMALL_STATES = ["NH", "VT", "MA", "RI", "CT", "NJ", "DE", "MD", "DC"]
+
+
+def map_fill(p_rep: float) -> str:
+    """Diverging fill: blue below 50% Republican, red above, neutral at 50%. Mixed in OKLab via CSS."""
+    if p_rep >= 0.5:
+        t = (p_rep - 0.5) * 200
+        return f"color-mix(in oklab, var(--map-r) {t:.0f}%, var(--map-mid))"
+    t = (0.5 - p_rep) * 200
+    return f"color-mix(in oklab, var(--map-d) {t:.0f}%, var(--map-mid))"
+
+
+def us_map(races: dict, label: str = "") -> str:
+    """races: postal -> {"p_rep", "tip" (HTML), "href", "name"}. States without a race are gray.
+
+    Small northeastern states also get a labeled square to the right, so they can be read and clicked.
+    """
+    global _US
+    if _US is None:
+        from pathlib import Path
+        _US = json.loads((Path(__file__).with_name("us_states.json")).read_text(encoding="utf-8"))
+    W, H = 975, 610
+    out = [f'<svg viewBox="0 0 {W + 80} {H}" role="img" aria-label="{html.escape(label)}">'
+           '<defs><pattern id="nohatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
+           '<rect class="hatch-bg" width="6" height="6"/><line class="hatch-ln" x1="0" y1="0" x2="0" y2="6"/></pattern></defs>']
+    for po, st in _US["states"].items():
+        r = races.get(po)
+        if r is None:
+            out.append(f'<path class="st none" d="{st["d"]}"><title>{html.escape(st["name"])}: no Senate race in 2026</title></path>')
+            continue
+        out.append(f'<a href="{r["href"]}" data-tip="{html.escape(r["tip"])}" aria-label="{html.escape(r["aria"])}">'
+                   f'<path class="st" d="{st["d"]}" style="fill: {map_fill(r["p_rep"])}"/></a>')
+    y = 150
+    out.append('<g class="box">')
+    for po in SMALL_STATES:
+        r = races.get(po)
+        fill = f' style="fill: {map_fill(r["p_rep"])}"' if r else ""
+        rect = f'<rect class="st{"" if r else " none"}" x="{W + 6}" y="{y}" width="30" height="24" rx="3"{fill}/>'
+        txt = f'<text x="{W + 42}" y="{y + 18}">{po}</text>'
+        if r:
+            out.append(f'<a href="{r["href"]}" data-tip="{html.escape(r["tip"])}" aria-label="{html.escape(r["aria"])}">{rect}{txt}</a>')
+        else:
+            out.append(rect + txt)
+        y += 31
+    out.append("</g></svg>")
+    return "".join(out)
+
+
+def map_key() -> str:
+    return ('<div class="mapkey"><span>Democrat certain</span><div class="ramp" aria-hidden="true"></div><span>Republican certain</span>'
+            '<div class="ticks"><span>100%</span><span>75%</span><span>50%</span><span>75%</span><span>100%</span></div></div>'
+            '<p class="small" style="margin-top:6px"><span class="nokey"></span>No Senate race in 2026</p>')

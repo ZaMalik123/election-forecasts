@@ -36,3 +36,24 @@
     });
   });
 })();
+
+// State map: hover or keyboard focus on a state shows its race in the tooltip.
+(function () {
+  document.querySelectorAll("figure.chart[data-map]").forEach(function (fig) {
+    var tip = fig.querySelector(".tip");
+    function show(el, x, y) {
+      tip.innerHTML = el.getAttribute("data-tip"); tip.classList.add("on");
+      var f = fig.getBoundingClientRect(), left = x - f.left + 14;
+      if (left + 230 > f.width) left = x - f.left - 244;
+      tip.style.left = Math.max(0, left) + "px"; tip.style.top = Math.max(0, y - f.top - 10) + "px";
+    }
+    fig.querySelectorAll("[data-tip]").forEach(function (el) {
+      el.addEventListener("pointermove", function (e) { show(el, e.clientX, e.clientY); });
+      el.addEventListener("pointerleave", function () { tip.classList.remove("on"); });
+      el.addEventListener("focus", function () {
+        var r = el.getBoundingClientRect(); show(el, r.left + r.width / 2, r.top + r.height / 2);
+      });
+      el.addEventListener("blur", function () { tip.classList.remove("on"); });
+    });
+  });
+})();

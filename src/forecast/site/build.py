@@ -171,6 +171,19 @@ def build_senate(site: Site, chamber: pd.DataFrame, races: pd.DataFrame, table: 
             f'<td><span class="who">{E(r.republican)} <small>R</small></span><span class="who">{E(r.challenger)} <small>{cp}</small></span></td>'
             f'<td class="hide-sm">{svg.split_bar([(r.p_republican, "--rep"), (r.p_challenger, ccol)], "racebar")}</td>'
             f"<td>{fav}</td></tr>")
+    map_races = {}
+    for r in fin.itertuples():
+        row = t.loc[r.state_po]
+        cp = chal_party(row, r.challenger)
+        sname = row["state"] + (" (special)" if int(row["special"]) else "")
+        first = [(r.challenger, cp, r.p_challenger), (r.republican, "R", r.p_republican)]
+        first.sort(key=lambda x: -x[2])
+        lines = "".join(f'<span style="--c: var({PARTY[p][0]})"><em>{E(n)} ({p})</em>{pct(v)}</span>' for n, p, v in first)
+        map_races[r.state_po] = {
+            "p_rep": r.p_republican, "href": site.href(f"us/2026/senate/{r.state_po.lower()}/", 3),
+            "tip": f"<b>{E(sname)}</b>{lines}",
+            "aria": f"{sname}: {first[0][0]} {pct(first[0][2])} to win",
+        }
     body = f"""
 <div class="notice"><strong>This is a backtest, not a live forecast.</strong>We built it after Election Day. Each day's numbers use only polls that had been released by that date, so they show what this model would have said at the time. We have not scored it against the results yet.</div>
 <h1>2026 US Senate forecast</h1>
@@ -180,6 +193,11 @@ def build_senate(site: Site, chamber: pd.DataFrame, races: pd.DataFrame, table: 
   <div class="chance" style="--c: var(--rep)"><div class="n">{pct(last.p_rep_control)}</div><div class="l">chance of Republican control</div></div>
   <div class="chance" style="--c: var(--ink)"><div class="n">{last.dem_seats_mean:.0f}–{last.rep_seats_mean:.0f}</div><div class="l">expected seats, Democrats to Republicans (Republican range {last.rep_seats_80pct_low}–{last.rep_seats_80pct_high} in 8 of 10 simulations)</div></div>
 </div>
+<h2>The map on Election Day</h2>
+<p class="prose">Each state is shaded by the chance its winner is a Republican. Deeper blue means a surer non-Republican win and deeper red a surer Republican win; pale states were close. Select a state for its forecast.</p>
+<figure class="chart map" data-map>{svg.us_map(map_races, label="Map of each state's chance of electing a Republican senator on Election Day 2026")}<div class="tip" aria-hidden="true"></div>
+{svg.map_key()}
+<figcaption>In Idaho, Montana, Nebraska and South Dakota, the main challenger is an independent, so blue there means the independent winning. Florida and Ohio are special elections.</figcaption></figure>
 <h2>How the odds moved</h2>
 {svg.figure(hero, legend=[("Democratic control", "--dem"), ("Republican control", "--rep")],
             caption="Democrats need 51 seats; Republicans keep control with 50 because the vice president breaks ties. The two lines don't add to 100% when independents could decide control.",
