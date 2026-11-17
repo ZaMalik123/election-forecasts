@@ -285,17 +285,17 @@ def build_methodology(site: Site) -> None:
     body = f"""
 <div class="prose">
 <h1>How the forecasts work</h1>
-<p class="lede">Each forecast is a simulation: we draw thousands of possible elections from a model of how far polls and fundamentals usually miss, then count how often each candidate or party wins.</p>
+<p class="lede">Each forecast is a simulation. We draw thousands of possible elections from a model of how far polls and fundamentals usually miss, then count how often each candidate or party wins.</p>
 <h2>US Senate</h2>
-<p>Each race starts from fundamentals: the state's lean in the last presidential election, whether an incumbent is running, and the national environment measured by generic-ballot polls. That gives a starting estimate and a range around it.</p>
-<p>The polls then update every race at once. The model treats each poll as a noisy reading of where the race will finish, and it accounts for four things a simple average misses:</p>
+<p>A number of factors influence our models: the state's lean in the last presidential election, whether an incumbent is running, and the national environment measured by generic-ballot polls. This gives our starting estimates.</p>
+<p>We use the polls to update our races. The model treats each poll as a noisy reading of where the race will finish, and it accounts for four things a simple average misses:</p>
 <ul>
 <li><strong>Pollster leans.</strong> Some firms consistently lean toward one party. The model estimates each pollster's lean from all the races it polls in a year and corrects for it. Campaign and party polls are allowed a larger lean.</li>
-<li><strong>Time.</strong> Opinion moves before Election Day, so a poll from six weeks ago says less than one from last week. How fast opinion drifts is learned from past elections.</li>
-<li><strong>Shared errors.</strong> Polls can miss in the same direction everywhere, as they did in 2020. The model includes that possibility, so it never treats fifty polls as fifty independent pieces of evidence.</li>
-<li><strong>Similar states.</strong> States share a national swing and a regional one, so a poll in one state also nudges its neighbors.</li>
+<li><strong>Time.</strong> Opinion moves before Election Day, so a poll from six weeks ago is less important than one from last week. </li>
+<li><strong>Shared errors.</strong> Polls can miss in the same direction everywhere, as they did in 2020. Our model treats polls as correlated pieces of evidence to account for this error.</li>
+<li><strong>Similar states.</strong> States share a national swing and a regional one, so a poll in one state also nudges its neighbors. This is another aspect of that aforementioned correlation in polling.</li>
 </ul>
-<p>Because every piece is a normal distribution, the result is calculated exactly rather than approximated. We then draw 10,000 simulated elections from it to get each candidate's chances and the range of Senate seats. A poll counts as public two days after its last day of fieldwork.</p>
+<p>As we use a linear-Gaussian model, our posterior estimation admits a closed-form solution. We then draw 10,000 simulated elections from it to get each candidate's chances and the range of Senate seats. A poll counts as public two days after its last day of fieldwork.</p>
 <h3>How accurate it has been</h3>
 <p>We test the model on every Senate election from 2006 to 2022, forecasting each year using only earlier years, including the settings for drift and pollster leans. The Brier score measures probability accuracy: 0 is perfect and 0.25 is a coin flip. The table also shows our earlier, simpler model, which blended a weighted poll average with fundamentals.</p>
 </div>
@@ -303,16 +303,16 @@ def build_methodology(site: Site) -> None:
 <div class="prose">
 <h2 id="spain">Spain</h2>
 <p>The Spanish model works in three steps.</p>
-<p><strong>National vote shares.</strong> Every published poll is treated as a noisy reading of each party's vote on election day. As in the US model, the polls are combined with pollster leans, drift over time and an error shared by all pollsters. Shares of different parties move together the way a fixed electorate splits between them: when one party gains, the others lose in proportion to their size. A joint figure, such as Broad Front and Compromís–FV reported together, is used as a reading of their sum. The state pollster CIS is allowed a much larger lean than private firms. The starting point is the previous election's result, with a wide range around it.</p>
-<p><strong>Constituencies.</strong> Each simulated national result is spread across the 52 constituencies by proportional swing: a party that is up 10% nationally is assumed up about 10% everywhere it stands, not up the same number of points. Each simulation adds random shifts for every autonomous community and every province. Their sizes come from how far real results strayed from proportional swing between 2015 and 2023. The provinces are then adjusted so they add back up to the national result.</p>
+<p><strong>National vote shares.</strong> Every published poll is treated as a noisy reading of each party's vote on election day. As in the US model, the polls are combined with pollster leans, drift over time and an error shared by all pollsters. Shares of different parties move together the way a fixed electorate splits between them: when one party gains, the others lose in proportion to their size. A joint figure, such as Broad Front and Compromís–FV reported together, is used as an estimate of their combined share. The state pollster CIS has historically tilted towards PSOE far more than private pollsters, so the model accounts for this explicitly. The starting point is the previous election's result, with a wide range around it.</p>
+<p><strong>Constituencies.</strong> Each simulated national result is spread across the 52 constituencies by proportional swing: a party that is up 10% nationally is assumed up about 10% everywhere it stands. Each simulation adds random shifts for every autonomous community and every province. Their sizes come from how far real results strayed from proportional swing between 2015 and 2023. The provinces are then adjusted so they add back up to the national result.</p>
 <p><strong>Seats.</strong> Seats are allocated with the D'Hondt method in each constituency, among lists with at least 3% of the valid vote there (blank ballots count as valid). Ceuta and Melilla elect one deputy each. We draw 10,000 simulations.</p>
 <p>Each day's forecast uses only polls published by that day. A poll counts as public two days after its fieldwork ends. Spanish law bans publishing polls in the five days before the vote, so the forecast freezes on November 23.</p>
 <h3>How accurate it has been</h3>
-<p>We tested the model on the elections of 2016, April 2019, November 2019 and 2023. Each test used only the polls available at the time, plus constituency shifts estimated from the other elections. Two simpler methods get the same polls for comparison: a 14-day poll average spread to constituencies by uniform swing (the same number of points everywhere) and by proportional swing.</p>
+<p>We tested the model on the elections of 2016, April 2019, November 2019 and 2023. Each test used only the polls available at the time, plus constituency shifts estimated from the other elections. Our model performs roughly as well as if we just trusted the polls head-on (either allocating seats by a proportional or uniform swing).</p>
 </div>
 {spain_bt}
 <div class="prose">
-<p>With only four past elections, these numbers are rough. The model's seat error is roughly in line with the simple methods at every horizon: a little better at some, a little worse at others. Most of the remaining error comes from the polls themselves: in 2023 they underestimated the PSOE by more than three points, and in 2016 they overestimated Unidos Podemos by about as much. The model's main advantage is honest uncertainty. Across all four elections, about 9 in 10 parties' seat totals landed inside its 80% range, so if anything the ranges are slightly too wide.</p>
+<p>Our (slightly more) sophisticated model is roughly comparable to predicting just by polls alone. Our hope is to treat this as a learning experience and improve modeling/forecasting results as we study more elections moving forward. A benefit of our model is that we can provide honest uncertainty regarding our prediction. Across the previous four elections, about 9 in 10 parties' seat totals landed inside its 80% range, so if anything the ranges are slightly too wide.</p>
 <p>We set the model's drift, pollster-lean and shared-error settings in advance rather than fitting them to these four elections. Trying a range of alternatives changed the backtest very little.</p>
 <h2>Sources</h2>
 <ul>
@@ -336,7 +336,9 @@ def build_static_pages(site: Site) -> None:
 <p class="lede">Machine Learning Winds builds probabilistic election forecasts, starting with the United States and expanding to elections that get little data coverage in English.</p>
 <p>Forecasts here are probabilities, not predictions. A candidate with a 70% chance should lose about three times in ten, and a forecast that never misses is a forecast that is too timid.</p>
 <p>We publish our methods and test them against past elections before trusting them with a live race. When a forecast is a backtest built after the fact, we say so at the top of the page.</p>
-<p>Machine Learning Winds LLC is based in Colorado.</p></div>"""
+<p>Machine Learning Winds LLC is based in Colorado.</p>
+<h2>Contact</h2>
+<p>Questions, corrections and press inquiries: <a href="mailto:research.fellow@machinelearningwinds.com">research.fellow@machinelearningwinds.com</a></p></div>"""
     privacy = """<div class="prose"><h1>Privacy</h1>
 <p class="lede">Draft policy, to be reviewed before launch.</p>
 <p>This site does not use cookies, accounts or tracking scripts. Our hosting provider keeps standard server logs, such as IP addresses and pages requested, to run and protect the site.</p>
