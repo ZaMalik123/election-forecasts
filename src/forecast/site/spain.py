@@ -157,6 +157,8 @@ def build(site) -> dict:
 <h2>Average seats in our simulations</h2>
 <p class="prose">Each simulation draws a national result from the polls, spreads it across the 52 constituencies, and allocates seats with the D'Hondt method. Parties run from left to right.</p>
 {seat_bar(latest)}
+<h2>Who leads where</h2>
+{map_figure(prov)}
 <h2>Parties</h2>
 {party_tbl}
 <p class="small">Ranges cover the middle 80% of 10,000 simulations. Compromís–FV runs only in the Valencian Community and includes Podemos there; elsewhere Podemos runs alone. UPN runs inside the PP list in Navarre.</p>
@@ -179,3 +181,68 @@ def build(site) -> dict:
               body, "home")
     return {"asof": asof, "right": right.p_majority, "left": left.p_majority, "lead": lead,
             "lead_p": lp.at[lead, "p_largest"], "latest": latest, "frozen": frozen}
+
+
+# ------------------------------------------------------------------------------------- map
+
+_ES = None
+
+
+def lead_fill(party: str, p: float) -> str:
+    """Party color, paler when the lead is less certain (three steps keep it readable)."""
+    strength = 100 if p >= 0.85 else 62 if p >= 0.6 else 30
+    return f"color-mix(in oklab, var({COLOR[party]}) {strength}%, var(--map-none))"
+
+
+def province_map(prov: pd.DataFrame) -> tuple[str, list[str]]:
+    """Choropleth: each province in the color of the party most likely to get the most votes there."""
+    global _ES
+    if _ES is None:
+        from pathlib import Path
+        import json
+        _ES = json.loads(Path(__file__).with_name("es_provinces.json").read_text(encoding="utf-8"))
+    W, H = _ES["width"], _ES["height"]
+    out = [f'<svg viewBox="0 0 {W} {H}" role="img" aria-label="Map of Spain\'s 52 constituencies, colored by the party most likely to win the most votes in each">']
+    leaders = []
+    dots = []
+    for provn, g in prov.groupby("province", sort=False):
+        lead = g.loc[g["p_first"].idxmax()]
+        leaders.append(lead.party)
+        seats = int(g["seats"].iat[0])
+        top = g[g["seats_mean"] >= 0.3].sort_values("seats_mean", ascending=False)
+        lines = "".join(f'<span style="--c: var({COLOR[r.party]})"><em>{E(name(r.party))}</em>{r.seats_mean:.1f}</span>'
+                        for r in top.itertuples())
+        tip = (f"<b>{E(provn)} · {seats} seat{'s' if seats != 1 else ''}</b>"
+               f"<small>{E(name(lead.party))} wins the most votes in {pct(lead.p_first)} of simulations. Average seats:</small>{lines}")
+        aria = f"{provn}, {seats} seats: {name(lead.party)} most votes, {pct(lead.p_first)} chance"
+        fill = lead_fill(lead.party, lead.p_first)
+        geo = _ES["provinces"].get(provn)
+        if geo is None:
+            continue
+        attrs = f'tabindex="0" data-tip="{E(tip)}" aria-label="{E(aria)}"'
+        if provn in ("Ceuta", "Melilla"):
+            # far too small to see at this scale: draw a marked square next to the city
+            x, y = geo["cx"], geo["cy"]
+            dots.append(f'<g class="city" {attrs}><rect class="st" x="{x - 9:.1f}" y="{y - 9:.1f}" width="18" height="18" rx="3" style="fill: {fill}"/>'
+                        f'<text x="{x + 14:.1f}" y="{y + 5:.1f}">{provn}</text></g>')
+        else:
+            out.append(f'<path class="st" {attrs} d="{geo["d"]}" style="fill: {fill}"/>')
+    out.append(f'<path class="inset" d="{_ES["inset"]}"/>')
+    out += dots
+    out.append("</svg>")
+    return "".join(out), list(dict.fromkeys(leaders))
+
+
+def map_figure(prov: pd.DataFrame) -> str:
+    svg_, leaders = province_map(prov)
+    order = [k for k in SPECTRUM if k in leaders]
+    parties = "".join(f'<li style="--c: var({COLOR[k]})"><i></i>{E(name(k))}</li>' for k in order)
+    k0 = "PP" if "PP" in order else order[0]
+    steps = "".join(f'<span class="step" style="background: {lead_fill(k0, p)}"></span>{lab}'
+                    for p, lab in [(0.5, "under 60%"), (0.7, "60–85%"), (0.9, "85% or more")])
+    return (f'<figure class="chart map esmap" data-map>{svg_}<div class="tip" aria-hidden="true"></div>'
+            f'<ul class="seatkey">{parties}</ul>'
+            f'<p class="small certainty">Chance of winning the most votes: {steps}</p>'
+            '<figcaption>Each constituency is colored by the party most likely to win the most votes there; paler shades mean '
+            'that lead is less certain. Select a constituency for its average seats by party. The Canary Islands are shown '
+            'in the inset; Ceuta and Melilla are marked with squares. Boundaries: Natural Earth (public domain).</figcaption></figure>')

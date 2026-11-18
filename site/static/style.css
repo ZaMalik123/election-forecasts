@@ -136,7 +136,7 @@ summary { cursor: pointer; color: var(--muted); font-size: 15px; }
    for colorblind separation in both themes; smaller parties are always labeled by name. */
 :root {
   --pp: #1f6fd1; --psoe: #c0222b; --vox: #86c44a; --fa: #a93fa0; --fv: #e07b22; --podemos: #6e3b8f;
-  --salf: #7a7f87; --erc: #e8a317; --junts: #1aa39a; --bildu: #9bbf3a; --pnv: #1d7a45; --bng: #5aa9d6;
+  --salf: #7a7f87; --erc: #e8a317; --junts: #1aa39a; --bildu: #7f9b1f; --pnv: #1d6b3a; --bng: #5aa9d6;
   --cc: #e6c229; --aa: #3f9a6a;
 }
 @media (prefers-color-scheme: dark) {
@@ -182,3 +182,13 @@ figure.map svg { max-width: 920px; }
 .mapkey .ticks { grid-column: 2; display: flex; justify-content: space-between; font-size: 12px; }
 @media (max-width: 600px) { .mapkey { grid-template-columns: 1fr 1fr; } .mapkey .ramp, .mapkey .ticks { grid-column: 1 / -1; grid-row: 2; } .mapkey .ticks { grid-row: 3; } .mapkey > span:last-of-type { text-align: right; } }
 .nokey { display: inline-block; width: 14px; height: 14px; border-radius: 2px; background: repeating-linear-gradient(45deg, var(--map-none) 0 3px, var(--map-hatch) 3px 5px); border: 1px solid var(--rule); vertical-align: -2px; margin-right: 6px; }
+
+/* Spain constituency map */
+.esmap svg { max-width: 760px; }
+.esmap .inset { fill: none; stroke: var(--rule); stroke-width: 1; }
+.esmap [tabindex]:hover, .esmap [tabindex]:focus { outline: none; }
+.esmap path.st:hover, .esmap path.st:focus, .esmap .city:hover rect, .esmap .city:focus rect { stroke: var(--ink); stroke-width: 2; }
+.esmap .city text { font-size: 12px; font-weight: 600; fill: var(--ink); }
+.esmap .certainty { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin-top: 8px; }
+.esmap .step { display: inline-block; width: 18px; height: 12px; border-radius: 2px; margin-left: 6px; }
+.tip small { display: block; color: var(--muted); font-size: 12px; margin: 2px 0 4px; }

@@ -8,6 +8,7 @@
     python run.py backtest                 run the baseline Senate model backtest
     python run.py load-raw                 load files already saved in data/raw (no internet needed)
     python run.py spain-backtest           backtest the Spain model on 2016, 2019 (x2) and 2023
+    python run.py fetch-spain-polls        download the latest Spain 2026 polls from Wikipedia
     python run.py spain-forecast [--date YYYY-MM-DD]   daily Spain 2026 forecast up to that date (default today)
     python run.py all                      everything above, in order (except import-file)
 """
@@ -127,9 +128,23 @@ def cmd_spain_backtest(con, args):
     print(s.round(2).to_string(index=False))
 
 
+def cmd_fetch_spain_polls(con, args):
+    from datetime import date as _date
+    from forecast.loaders import wiki_es_polls
+    from forecast.spain import forecast as sf
+    if _date.today() > sf.FREEZE and not args.force:
+        print(f"Forecast frozen since {sf.FREEZE} (Spanish poll publication ban); not fetching new polls.")
+        return
+    print(f"Saved {wiki_es_polls.update()} polls to {wiki_es_polls.OUT}")
+
+
 def cmd_spain_forecast(con, args):
     from datetime import date as _date
     from forecast.spain import forecast as sf
+    frozen_file = sf.DAILY_DIR / f"{sf.FREEZE.isoformat()}_parties.csv"
+    if not args.date and _date.today() > sf.FREEZE and frozen_file.exists():
+        print(f"Forecast frozen on {sf.FREEZE}; nothing to update.")
+        return
     day = min(_date.fromisoformat(args.date) if args.date else _date.today(), sf.FREEZE)
     done = sf.daily(end=day, n_sims=args.sims)
     print(f"Ran {len(done)} new day(s) through {day}")
@@ -193,6 +208,8 @@ def main(argv=None):
     sub.add_parser("load-raw")
     p = sub.add_parser("spain-backtest", help="backtest the Spain model")
     p.add_argument("--sims", type=int, default=4000)
+    p = sub.add_parser("fetch-spain-polls", help="download the current Spain 2026 poll table from Wikipedia")
+    p.add_argument("--force", action="store_true", help="fetch even after the Nov 23 freeze")
     p = sub.add_parser("spain-forecast", help="daily Spain 2026 forecast")
     p.add_argument("--date", default=None)
     p.add_argument("--sims", type=int, default=4000)

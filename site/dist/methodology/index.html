@@ -16,12 +16,12 @@
 </head>
 <body>
 <header class="site-head"><div class="wrap">
-  <a class="mark" href="../index.html"><svg viewBox="0 0 30 20" aria-hidden="true"><path d="M2 5h17a3 3 0 1 0-3-3"/><path d="M2 10h24a3 3 0 1 1-3 3"/><path d="M2 15h11"/></svg>Machine Learning Winds <span>Forecasts</span></a>
+  <a class="mark" href="../"><svg viewBox="0 0 30 20" aria-hidden="true"><path d="M2 5h17a3 3 0 1 0-3-3"/><path d="M2 10h24a3 3 0 1 1-3 3"/><path d="M2 15h11"/></svg>Machine Learning Winds <span>Forecasts</span></a>
   <nav class="site-nav" aria-label="Main">
-    <a href="../spain/2026/index.html">Spain 2026</a>
-    <a href="../us/2026/senate/index.html">US Senate 2026</a>
-    <a href="../methodology/index.html" aria-current="page">Methodology</a>
-    <a href="../about/index.html">About</a>
+    <a href="../spain/2026/">Spain 2026</a>
+    <a href="../us/2026/senate/">US Senate 2026</a>
+    <a href="../methodology/" aria-current="page">Methodology</a>
+    <a href="../about/">About</a>
   </nav>
 </div></header>
 <main><div class="wrap">
@@ -53,7 +53,7 @@
 <h3>How accurate it has been</h3>
 <p>We tested the model on the elections of 2016, April 2019, November 2019 and 2023. Each test used only the polls available at the time, plus constituency shifts estimated from the other elections. Our model performs roughly as well as if we just trusted the polls head-on (either allocating seats by a proportional or uniform swing).</p>
 </div>
-<div class='tablewrap' style='max-width: 760px'><table><thead><tr><th class='num'>Days before election</th><th class='num'>Seats misallocated: our model</th><th class='num'>Poll average, proportional swing</th><th class='num'>Poll average, uniform swing</th><th class='num'>Vote-share error (points)</th><th class='num'>Seat counts inside 80% range</th></tr></thead><tbody><tr><td class='num'>1</td><td class='num'>18</td><td class='num'>18</td><td class='num'>20</td><td class='num'>0.7</td><td class='num'>40 of 41</td></tr><tr><td class='num'>7</td><td class='num'>21</td><td class='num'>20</td><td class='num'>20</td><td class='num'>0.8</td><td class='num'>38 of 41</td></tr><tr><td class='num'>14</td><td class='num'>21</td><td class='num'>22</td><td class='num'>23</td><td class='num'>0.9</td><td class='num'>37 of 41</td></tr><tr><td class='num'>28</td><td class='num'>24</td><td class='num'>21</td><td class='num'>24</td><td class='num'>1.0</td><td class='num'>37 of 41</td></tr><tr><td class='num'>56</td><td class='num'>33</td><td class='num'>36</td><td class='num'>36</td><td class='num'>1.7</td><td class='num'>34 of 41</td></tr></tbody></table></div><p class='small'>Seats misallocated is half the sum, over all parties, of the gap between forecast and actual seats, averaged over the four elections. Our model's figure uses the most likely seat count given its central vote estimate.</p>
+<div class='tablewrap' style='max-width: 760px'><table><thead><tr><th class='num'>Days before election</th><th class='num'>Seats misallocated: our model</th><th class='num'>Poll average, proportional swing</th><th class='num'>Poll average, uniform swing</th><th class='num'>Vote-share error (points)</th><th class='num'>Seat counts inside 80% range</th></tr></thead><tbody><tr><td class='num'>1</td><td class='num'>18</td><td class='num'>18</td><td class='num'>20</td><td class='num'>0.7</td><td class='num'>39 of 41</td></tr><tr><td class='num'>7</td><td class='num'>21</td><td class='num'>20</td><td class='num'>20</td><td class='num'>0.8</td><td class='num'>37 of 41</td></tr><tr><td class='num'>14</td><td class='num'>21</td><td class='num'>22</td><td class='num'>23</td><td class='num'>0.9</td><td class='num'>37 of 41</td></tr><tr><td class='num'>28</td><td class='num'>25</td><td class='num'>22</td><td class='num'>26</td><td class='num'>1.0</td><td class='num'>36 of 41</td></tr><tr><td class='num'>56</td><td class='num'>33</td><td class='num'>36</td><td class='num'>36</td><td class='num'>1.8</td><td class='num'>34 of 41</td></tr></tbody></table></div><p class='small'>Seats misallocated is half the sum, over all parties, of the gap between forecast and actual seats, averaged over the four elections. Our model's figure uses the most likely seat count given its central vote estimate.</p>
 <div class="prose">
 <p>Our (slightly more) sophisticated model is roughly comparable to predicting just by polls alone. Our hope is to treat this as a learning experience and improve modeling/forecasting results as we study more elections moving forward. A benefit of our model is that we can provide honest uncertainty regarding our prediction. Across the previous four elections, about 9 in 10 parties' seat totals landed inside its 80% range, so if anything the ranges are slightly too wide.</p>
 <p>We set the model's drift, pollster-lean and shared-error settings in advance rather than fitting them to these four elections. Trying a range of alternatives changed the backtest very little.</p>
@@ -69,12 +69,12 @@
 <h2>Corrections</h2>
 <p>When we find a mistake in our data or code, we fix it, rerun the forecast, and note the change on this page.</p>
 <h3>Changes</h3>
-<ul><li>November 14, 2026: the Spain forecast launched.</li><li>November 14, 2026: the US Senate model now estimates pollster leans, opinion drift and shared polling errors jointly. It replaced a model that blended a weighted poll average with fundamentals.</li></ul>
+<ul><li>November 18, 2026: Spain forecast: daily tracking polls and rolling panels now count once per non-overlapping fieldwork period, instead of every daily release counting as a new poll. The whole daily history was recomputed this way; the forecast barely moved.</li><li>November 14, 2026: the Spain forecast launched.</li><li>November 14, 2026: the US Senate model now estimates pollster leans, opinion drift and shared polling errors jointly. It replaced a model that blended a weighted poll average with fundamentals.</li></ul>
 </div>
 </div></main>
 <footer class="site-foot"><div class="wrap">
   <span>© 2026 Machine Learning Winds LLC. Forecasts are probabilities, not predictions.</span>
-  <nav aria-label="Footer"><a href="../methodology/index.html">Methodology and sources</a><a href="../privacy/index.html">Privacy</a><a href="../terms/index.html">Terms</a></nav>
+  <nav aria-label="Footer"><a href="../methodology/">Methodology and sources</a><a href="../privacy/">Privacy</a><a href="../terms/">Terms</a></nav>
 </div></footer>
 <script src="../static/charts.js" defer></script>
 </body>

@@ -333,8 +333,38 @@ def _end_date(text: str):
     return int(d), MONTHS[mon], (int(y) if y else None)
 
 
+def _start_date(text: str, end: date) -> date:
+    """First day of fieldwork; '13–17 Nov' -> 13 Nov, '26 Oct–16 Nov' -> 26 Oct."""
+    m = re.match(r"\s*(\d{1,2})(?:\s+([A-Z][a-z]{2})[a-z]*)?(?:\s+(\d{4}))?", text)
+    if not m:
+        return end
+    d = int(m.group(1))
+    mon = MONTHS.get(m.group(2), end.month) if m.group(2) else end.month
+    y = int(m.group(3)) if m.group(3) else (end.year - 1 if mon > end.month else end.year)
+    try:
+        st = date(y, mon, d)
+    except ValueError:
+        return end
+    return st if st <= end else end
+
+
 def pollster_key(name: str) -> str:
     return re.split(r"[/(]", name)[0].strip().lower()
+
+
+LATEST_2026 = config.ROOT / "data" / "raw" / "spain_polls_2026_latest.json"
+
+
+def poll_rows() -> list:
+    """All poll rows; the current 2026 table (table 0) is replaced by the latest download if present.
+
+    Daily refresh: download spain_polls_2026_latest.json (same row format) and re-run the forecast.
+    """
+    rows = raw()["polls"]
+    if LATEST_2026.exists():
+        latest = json.loads(LATEST_2026.read_text(encoding="utf-8"))["rows"]
+        rows = latest + [r for r in rows if not (r[0] == "2026" and r[1] == 0)]
+    return rows
 
 
 @lru_cache(maxsize=None)
@@ -343,7 +373,7 @@ def polls(election: str) -> pd.DataFrame:
     spec = SPECS[election]
     eday = ELECTION_DAY[election]
     prev_day = ELECTION_DAY[PREVIOUS[election]]
-    rows = [r for r in raw()["polls"] if r[0] == election]
+    rows = [r for r in poll_rows() if r[0] == election]
     polls_, order = {}, []
     for e, t, pol, dt, n, party, v in rows:
         key = (t, pol, dt, n)
@@ -395,7 +425,30 @@ def polls(election: str) -> pd.DataFrame:
             groups.append((canon, val, ok))
         for canon, val, ok in groups:
             if ok and val > 0:
-                out.append({"end": pd.Timestamp(end), "pollster": pol, "house": pollster_key(pol),
+                out.append({"end": pd.Timestamp(end), "start": pd.Timestamp(_start_date(dt, end)),
+                            "pollster": pol, "house": pollster_key(pol),
                             "n": size, "group": tuple(sorted(canon)), "value": val / 100.0,
                             "poll_id": idx})
     return pd.DataFrame(out)
+
+
+def drop_overlapping(df: pd.DataFrame) -> pd.DataFrame:
+    """Keep non-overlapping releases per pollster.
+
+    Daily tracking polls publish rolling samples whose fieldwork overlaps the previous release, so
+    each release repeats most of the same interviews. Counting every release would treat the same
+    respondents as independent evidence many times. For each pollster, walk from the newest release
+    back and keep a release only if its fieldwork ended before the last kept release began.
+    Call this on the polls already public on a given day (model.poll_window does).
+    """
+    if df.empty:
+        return df
+    polls = df.drop_duplicates("poll_id")[["poll_id", "house", "start", "end"]]
+    keep = []
+    for _, g in polls.sort_values(["end", "start"], ascending=False).groupby("house", sort=False):
+        earliest = None
+        for r in g.itertuples():
+            if earliest is None or r.end < earliest:
+                keep.append(r.poll_id)
+                earliest = r.start
+    return df[df["poll_id"].isin(keep)]

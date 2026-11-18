@@ -112,6 +112,7 @@ def latest_detail(day: date, n_sims: int = 10000):
     close = []
     for c, name in enumerate(D.PROVINCES):
         S = sim["seats"][:, c, :]
+        first = np.bincount(sim["provincial"][:, c, :].argmax(1), minlength=len(parties)) / S.shape[0]
         for i, k in enumerate(parties):
             sh = sim["provincial"][:, c, i]
             if sh.mean() < 0.002 and S[:, i].max() == 0:
@@ -119,7 +120,7 @@ def latest_detail(day: date, n_sims: int = 10000):
             prov.append({"province": name, "community": D.REGION_OF[name], "seats": int(seats_c[name]),
                          "party": k, "share_mean": sh.mean(), "share_p10": np.percentile(sh, 10),
                          "share_p90": np.percentile(sh, 90), "seats_mean": S[:, i].mean(),
-                         "p_any_seat": (S[:, i] > 0).mean()})
+                         "p_any_seat": (S[:, i] > 0).mean(), "p_first": first[i]})
         # how often the most common allocation happens; low = seats genuinely in play
         keys = pd.Series([tuple(r) for r in S])
         vc = keys.value_counts(normalize=True)

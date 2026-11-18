@@ -1,0 +1,6 @@
+date,bloc,parties,seats_mean,seats_p10,seats_p90,p_majority
+2026-10-20,PP + Vox,PP + Vox,199.65575,183.0,217.0,0.9535
+2026-10-20,PP + Vox + CC,PP + Vox + CC,201.38125,184.0,219.0,0.965
+2026-10-20,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,148.93375,132.0,166.0,0.0335
+2026-10-20,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,143.62375,126.0,161.0,0.018
+2026-10-20,PSOE + PP,PSOE + PP,241.32875,224.0,259.0,0.9985

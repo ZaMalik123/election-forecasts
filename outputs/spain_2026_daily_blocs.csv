@@ -1,0 +1,241 @@
+date,bloc,parties,seats_mean,seats_p10,seats_p90,p_majority
+2026-10-02,PP + Vox,PP + Vox,199.59775,180.0,218.0,0.936
+2026-10-02,PP + Vox + CC,PP + Vox + CC,201.431,182.0,220.0,0.94675
+2026-10-02,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,148.795,130.0,168.0,0.0485
+2026-10-02,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,144.20125,126.0,163.0,0.0305
+2026-10-02,PSOE + PP,PSOE + PP,242.1805,223.0,261.0,0.9985
+2026-10-03,PP + Vox,PP + Vox,198.603,179.0,217.0,0.92825
+2026-10-03,PP + Vox + CC,PP + Vox + CC,200.428,181.0,219.0,0.94175
+2026-10-03,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,149.84725,131.0,170.0,0.052
+2026-10-03,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,145.152,126.0,164.0,0.029
+2026-10-03,PSOE + PP,PSOE + PP,240.30175,221.0,259.0,0.9985
+2026-10-04,PP + Vox,PP + Vox,199.0205,180.0,217.0999999999999,0.9315
+2026-10-04,PP + Vox + CC,PP + Vox + CC,200.834,182.0,219.0,0.9435
+2026-10-04,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,149.67175,131.0,169.0,0.05275
+2026-10-04,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,144.8595,126.0,164.0,0.03175
+2026-10-04,PSOE + PP,PSOE + PP,240.8835,222.0,259.0,0.99875
+2026-10-05,PP + Vox,PP + Vox,198.768,181.0,217.0,0.93675
+2026-10-05,PP + Vox + CC,PP + Vox + CC,200.436,182.0,219.0,0.94725
+2026-10-05,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,149.88675,132.0,168.0,0.04975
+2026-10-05,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,145.2975,127.0,164.0,0.031
+2026-10-05,PSOE + PP,PSOE + PP,240.849,222.0,259.0,0.99875
+2026-10-06,PP + Vox,PP + Vox,198.57825,180.0,217.0,0.9375
+2026-10-06,PP + Vox + CC,PP + Vox + CC,200.258,182.0,218.0,0.94875
+2026-10-06,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,149.9845,132.0,169.0,0.04475
+2026-10-06,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,145.345,128.0,163.0999999999999,0.025
+2026-10-06,PSOE + PP,PSOE + PP,240.9615,222.0,259.0,0.99875
+2026-10-07,PP + Vox,PP + Vox,199.30575,180.0,217.0,0.9315
+2026-10-07,PP + Vox + CC,PP + Vox + CC,201.013,182.0,219.0,0.94225
+2026-10-07,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,149.3295,131.0,168.0,0.0535
+2026-10-07,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,144.77475,127.0,163.0,0.03175
+2026-10-07,PSOE + PP,PSOE + PP,240.81525,222.0,260.0,0.9975
+2026-10-08,PP + Vox,PP + Vox,200.63825,181.0,219.0,0.9445
+2026-10-08,PP + Vox + CC,PP + Vox + CC,202.332,183.0,220.0,0.951
+2026-10-08,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,147.97225,130.0,167.0,0.0445
+2026-10-08,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,142.3705,124.0,161.0999999999999,0.0265
+2026-10-08,PSOE + PP,PSOE + PP,242.36225,224.0,261.0,0.999
+2026-10-09,PP + Vox,PP + Vox,199.551,181.0,217.0,0.94375
+2026-10-09,PP + Vox + CC,PP + Vox + CC,201.3695,183.0,219.0,0.9525
+2026-10-09,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,149.034,131.0,167.0,0.0435
+2026-10-09,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,143.673,126.0,162.0,0.0255
+2026-10-09,PSOE + PP,PSOE + PP,241.59925,223.0,260.0,0.99825
+2026-10-10,PP + Vox,PP + Vox,197.8205,179.0,216.0,0.93325
+2026-10-10,PP + Vox + CC,PP + Vox + CC,199.54325,181.0,217.0,0.945
+2026-10-10,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,150.81975,133.0,169.0,0.05025
+2026-10-10,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,145.34475,128.0,163.0,0.02625
+2026-10-10,PSOE + PP,PSOE + PP,239.83225,221.0,258.0,0.998
+2026-10-11,PP + Vox,PP + Vox,197.828,179.0,215.0,0.931
+2026-10-11,PP + Vox + CC,PP + Vox + CC,199.513,181.0,217.0,0.947
+2026-10-11,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,150.7355,133.0,169.0,0.05275
+2026-10-11,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,145.3155,128.0,164.0,0.02975
+2026-10-11,PSOE + PP,PSOE + PP,239.752,221.0,258.0,0.999
+2026-10-12,PP + Vox,PP + Vox,197.3645,179.0,215.0,0.92675
+2026-10-12,PP + Vox + CC,PP + Vox + CC,199.00475,181.0,217.0,0.93775
+2026-10-12,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,151.1925,134.0,169.0,0.05425
+2026-10-12,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,145.925,128.0,164.0,0.03175
+2026-10-12,PSOE + PP,PSOE + PP,240.11075,222.0,258.0,0.99875
+2026-10-13,PP + Vox,PP + Vox,197.87775,179.0,216.0,0.929
+2026-10-13,PP + Vox + CC,PP + Vox + CC,199.555,181.0,217.0,0.94075
+2026-10-13,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,150.75975,133.0,169.0,0.052
+2026-10-13,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,145.45025,128.0,163.0,0.0255
+2026-10-13,PSOE + PP,PSOE + PP,239.23875,221.0,256.0,0.999
+2026-10-14,PP + Vox,PP + Vox,197.9355,180.0,216.0,0.93825
+2026-10-14,PP + Vox + CC,PP + Vox + CC,199.60175,181.0,217.0,0.94875
+2026-10-14,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,150.72375,133.0,169.0,0.04675
+2026-10-14,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,145.27575,127.0,163.0999999999999,0.02625
+2026-10-14,PSOE + PP,PSOE + PP,239.78575,221.0,258.0,0.99825
+2026-10-15,PP + Vox,PP + Vox,197.5955,179.0,216.0,0.9285
+2026-10-15,PP + Vox + CC,PP + Vox + CC,199.32825,181.0,218.0,0.93725
+2026-10-15,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,151.0075,133.0,169.0,0.055
+2026-10-15,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,145.7545,128.0,164.0,0.03125
+2026-10-15,PSOE + PP,PSOE + PP,239.23625,221.0,257.0,0.99875
+2026-10-16,PP + Vox,PP + Vox,200.9845,183.90000000000003,219.0,0.95625
+2026-10-16,PP + Vox + CC,PP + Vox + CC,202.71625,185.0,220.0,0.96425
+2026-10-16,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,147.62325,130.0,165.0,0.034
+2026-10-16,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,142.1795,125.0,159.0,0.0175
+2026-10-16,PSOE + PP,PSOE + PP,240.913,223.0,258.0,0.99875
+2026-10-17,PP + Vox,PP + Vox,200.70275,183.0,219.0,0.9565
+2026-10-17,PP + Vox + CC,PP + Vox + CC,202.41375,185.0,220.0,0.965
+2026-10-17,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,147.93525,130.0,165.0,0.032
+2026-10-17,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,142.45325,125.0,160.0,0.017
+2026-10-17,PSOE + PP,PSOE + PP,241.14775,224.0,258.0,0.99875
+2026-10-18,PP + Vox,PP + Vox,199.66025,181.0,217.0,0.9475
+2026-10-18,PP + Vox + CC,PP + Vox + CC,201.43025,184.0,219.0,0.95725
+2026-10-18,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,148.99125,132.0,167.0,0.03975
+2026-10-18,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,143.6025,127.0,162.0,0.019
+2026-10-18,PSOE + PP,PSOE + PP,240.1675,222.0,257.0,0.999
+2026-10-19,PP + Vox,PP + Vox,200.17675,182.0,218.0,0.95675
+2026-10-19,PP + Vox + CC,PP + Vox + CC,201.89525,184.0,219.0,0.963
+2026-10-19,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,148.3075,131.0,166.0,0.0295
+2026-10-19,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,143.02525,126.0,160.0,0.01775
+2026-10-19,PSOE + PP,PSOE + PP,241.252,223.0,259.0,0.999
+2026-10-20,PP + Vox,PP + Vox,199.65575,183.0,217.0,0.9535
+2026-10-20,PP + Vox + CC,PP + Vox + CC,201.38125,184.0,219.0,0.965
+2026-10-20,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,148.93375,132.0,166.0,0.0335
+2026-10-20,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,143.62375,126.0,161.0,0.018
+2026-10-20,PSOE + PP,PSOE + PP,241.32875,224.0,259.0,0.9985
+2026-10-21,PP + Vox,PP + Vox,199.605,182.0,217.0,0.955
+2026-10-21,PP + Vox + CC,PP + Vox + CC,201.323,184.0,218.0,0.9645
+2026-10-21,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,148.97425,132.0,166.0,0.031
+2026-10-21,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,143.71975,127.0,160.0,0.0155
+2026-10-21,PSOE + PP,PSOE + PP,241.3925,224.0,259.0,0.99875
+2026-10-22,PP + Vox,PP + Vox,199.88325,183.0,217.0,0.954
+2026-10-22,PP + Vox + CC,PP + Vox + CC,201.598,184.0,219.0,0.96075
+2026-10-22,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,148.63775,131.0,166.0,0.03475
+2026-10-22,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,143.39025,126.0,160.0,0.01825
+2026-10-22,PSOE + PP,PSOE + PP,241.674,225.0,258.0,0.9995
+2026-10-23,PP + Vox,PP + Vox,200.1915,182.0,218.0,0.953
+2026-10-23,PP + Vox + CC,PP + Vox + CC,201.95,184.0,219.0,0.9635
+2026-10-23,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,148.35825,131.0,166.0,0.034
+2026-10-23,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,143.1125,126.0,160.0,0.017
+2026-10-23,PSOE + PP,PSOE + PP,241.54875,224.0,259.0,0.99975
+2026-10-24,PP + Vox,PP + Vox,199.2195,182.0,216.0,0.951
+2026-10-24,PP + Vox + CC,PP + Vox + CC,200.82675,184.0,218.0,0.958
+2026-10-24,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,149.3575,132.0,166.0,0.037
+2026-10-24,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,144.23925,127.90000000000003,161.0,0.0195
+2026-10-24,PSOE + PP,PSOE + PP,240.42325,223.0,257.0,0.9985
+2026-10-25,PP + Vox,PP + Vox,197.48425,180.0,214.0,0.943
+2026-10-25,PP + Vox + CC,PP + Vox + CC,199.20475,182.0,216.0,0.95625
+2026-10-25,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,150.9305,134.0,168.0,0.03925
+2026-10-25,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,145.60425,129.0,162.0999999999999,0.021
+2026-10-25,PSOE + PP,PSOE + PP,239.50825,222.0,256.0,0.999
+2026-10-26,PP + Vox,PP + Vox,197.8745,181.0,215.0,0.9465
+2026-10-26,PP + Vox + CC,PP + Vox + CC,199.4855,183.0,216.0,0.955
+2026-10-26,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,150.42525,133.0,167.0,0.0385
+2026-10-26,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,145.1805,128.0,162.0,0.0205
+2026-10-26,PSOE + PP,PSOE + PP,240.0185,223.0,257.0,0.99875
+2026-10-27,PP + Vox,PP + Vox,195.7875,178.0,213.0,0.92575
+2026-10-27,PP + Vox + CC,PP + Vox + CC,197.28525,180.0,214.0,0.93875
+2026-10-27,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,152.5125,135.0,170.0,0.05125
+2026-10-27,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,146.95275,130.0,164.0,0.02975
+2026-10-27,PSOE + PP,PSOE + PP,239.257,222.0,256.0,0.9985
+2026-10-28,PP + Vox,PP + Vox,196.5205,180.0,213.0,0.94275
+2026-10-28,PP + Vox + CC,PP + Vox + CC,198.03975,182.0,214.0,0.9495
+2026-10-28,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,151.795,136.0,168.0,0.0405
+2026-10-28,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,146.3635,130.0,163.0,0.0225
+2026-10-28,PSOE + PP,PSOE + PP,239.22775,222.0,255.0,0.9995
+2026-10-29,PP + Vox,PP + Vox,195.019,178.0,212.0,0.93
+2026-10-29,PP + Vox + CC,PP + Vox + CC,196.576,180.0,213.0,0.94275
+2026-10-29,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,153.352,137.0,170.0,0.0475
+2026-10-29,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,147.9105,131.0,164.0,0.02675
+2026-10-29,PSOE + PP,PSOE + PP,239.43075,223.0,256.0,0.9995
+2026-10-30,PP + Vox,PP + Vox,195.098,178.0,211.0,0.9305
+2026-10-30,PP + Vox + CC,PP + Vox + CC,196.54875,180.0,212.0,0.9415
+2026-10-30,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,152.78025,137.0,169.0,0.0465
+2026-10-30,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,147.30875,131.0,164.0,0.022
+2026-10-30,PSOE + PP,PSOE + PP,239.05425,223.0,255.0,0.9995
+2026-10-31,PP + Vox,PP + Vox,195.30325,179.0,212.0,0.93175
+2026-10-31,PP + Vox + CC,PP + Vox + CC,196.75525,181.0,213.0,0.94325
+2026-10-31,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,152.64325,136.0,169.0,0.0455
+2026-10-31,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,147.172,131.0,163.0,0.0255
+2026-10-31,PSOE + PP,PSOE + PP,239.2105,223.0,255.0,0.99975
+2026-11-01,PP + Vox,PP + Vox,198.16,182.0,214.0,0.94925
+2026-11-01,PP + Vox + CC,PP + Vox + CC,199.6095,183.0,216.0,0.95825
+2026-11-01,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,149.7045,133.0,166.0,0.02925
+2026-11-01,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,144.35575,129.0,160.0,0.015
+2026-11-01,PSOE + PP,PSOE + PP,237.9625,222.0,254.0,0.9995
+2026-11-02,PP + Vox,PP + Vox,198.6725,183.0,215.0,0.95625
+2026-11-02,PP + Vox + CC,PP + Vox + CC,200.12275,184.0,216.0,0.9635
+2026-11-02,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,149.22175,133.0,165.0,0.0305
+2026-11-02,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,143.84425,128.0,160.0,0.01325
+2026-11-02,PSOE + PP,PSOE + PP,238.322,222.0,254.0,0.999
+2026-11-03,PP + Vox,PP + Vox,198.70475,182.0,215.0,0.957
+2026-11-03,PP + Vox + CC,PP + Vox + CC,200.13725,184.0,216.0,0.9655
+2026-11-03,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,149.051,133.0,165.0,0.0275
+2026-11-03,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,143.84,128.0,160.0,0.01375
+2026-11-03,PSOE + PP,PSOE + PP,238.706,223.0,255.0,0.999
+2026-11-04,PP + Vox,PP + Vox,198.257,182.0,214.0,0.9545
+2026-11-04,PP + Vox + CC,PP + Vox + CC,199.732,184.0,215.0999999999999,0.964
+2026-11-04,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,149.39975,133.0,165.0,0.0285
+2026-11-04,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,144.31775,129.0,160.0,0.016
+2026-11-04,PSOE + PP,PSOE + PP,237.52975,221.0,254.0,0.999
+2026-11-05,PP + Vox,PP + Vox,198.8765,183.0,215.0,0.958
+2026-11-05,PP + Vox + CC,PP + Vox + CC,200.3005,184.0,216.0,0.964
+2026-11-05,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,148.6955,133.0,165.0,0.0275
+2026-11-05,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,143.50625,127.0,159.0,0.01425
+2026-11-05,PSOE + PP,PSOE + PP,237.18475,220.0,253.0,0.99975
+2026-11-06,PP + Vox,PP + Vox,195.49675,180.0,210.0,0.94275
+2026-11-06,PP + Vox + CC,PP + Vox + CC,196.95175,182.0,212.0,0.951
+2026-11-06,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,151.92575,137.0,167.0,0.0365
+2026-11-06,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,146.89475,132.0,162.0,0.021
+2026-11-06,PSOE + PP,PSOE + PP,239.6385,224.0,255.0,0.9995
+2026-11-07,PP + Vox,PP + Vox,195.63,180.0,211.0,0.9445
+2026-11-07,PP + Vox + CC,PP + Vox + CC,197.037,181.0,213.0,0.95325
+2026-11-07,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,151.66375,136.0,167.0,0.03475
+2026-11-07,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,146.62925,131.0,162.0,0.01975
+2026-11-07,PSOE + PP,PSOE + PP,240.537,225.0,256.0,0.9995
+2026-11-08,PP + Vox,PP + Vox,196.507,181.0,212.0,0.9505
+2026-11-08,PP + Vox + CC,PP + Vox + CC,197.95625,183.0,213.0,0.96075
+2026-11-08,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,150.667,135.0,166.0,0.028
+2026-11-08,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,145.58825,130.0,161.0,0.0165
+2026-11-08,PSOE + PP,PSOE + PP,238.8575,223.0,254.0,0.99975
+2026-11-09,PP + Vox,PP + Vox,195.85925,181.0,211.0,0.946
+2026-11-09,PP + Vox + CC,PP + Vox + CC,197.31175,182.0,213.0,0.9565
+2026-11-09,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,151.27375,136.0,167.0,0.033
+2026-11-09,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,146.1925,131.0,162.0,0.01525
+2026-11-09,PSOE + PP,PSOE + PP,239.52475,224.0,255.0,0.99975
+2026-11-10,PP + Vox,PP + Vox,195.091,180.0,211.0,0.94
+2026-11-10,PP + Vox + CC,PP + Vox + CC,196.526,181.0,212.0,0.95225
+2026-11-10,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,151.94625,137.0,167.0,0.03325
+2026-11-10,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,146.962,132.0,162.0,0.0165
+2026-11-10,PSOE + PP,PSOE + PP,239.518,225.0,255.0,0.999
+2026-11-11,PP + Vox,PP + Vox,194.95775,180.0,210.0,0.937
+2026-11-11,PP + Vox + CC,PP + Vox + CC,196.43525,181.0,212.0,0.94675
+2026-11-11,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,152.07125,137.0,167.0,0.0415
+2026-11-11,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,147.0605,132.0,163.0,0.02
+2026-11-11,PSOE + PP,PSOE + PP,239.33625,224.0,255.0,0.99975
+2026-11-12,PP + Vox,PP + Vox,194.71775,179.0,210.0,0.9405
+2026-11-12,PP + Vox + CC,PP + Vox + CC,196.11625,181.0,211.0,0.95325
+2026-11-12,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,152.3545,138.0,168.0,0.03475
+2026-11-12,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,147.5615,133.0,163.0,0.02025
+2026-11-12,PSOE + PP,PSOE + PP,239.69825,224.0,255.0,0.9985
+2026-11-13,PP + Vox,PP + Vox,194.52925,179.0,210.0,0.9385
+2026-11-13,PP + Vox + CC,PP + Vox + CC,195.93575,181.0,212.0,0.94975
+2026-11-13,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,152.26625,137.0,168.0,0.034
+2026-11-13,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,147.33175,132.0,163.0,0.017
+2026-11-13,PSOE + PP,PSOE + PP,238.70125,224.0,254.0,0.99975
+2026-11-14,PP + Vox,PP + Vox,194.68325,179.0,210.0,0.9325
+2026-11-14,PP + Vox + CC,PP + Vox + CC,196.073,181.0,211.0,0.94375
+2026-11-14,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,151.92775,137.0,167.0,0.03825
+2026-11-14,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,146.96175,132.0,162.0,0.0185
+2026-11-14,PSOE + PP,PSOE + PP,238.8605,223.90000000000003,254.0,0.99975
+2026-11-15,PP + Vox,PP + Vox,194.14775,179.0,208.0,0.93525
+2026-11-15,PP + Vox + CC,PP + Vox + CC,195.57925,180.0,210.0,0.94475
+2026-11-15,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,152.31925,138.0,167.0,0.03325
+2026-11-15,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,147.60625,133.0,162.0,0.0145
+2026-11-15,PSOE + PP,PSOE + PP,239.41275,224.90000000000003,254.0,0.99975
+2026-11-16,PP + Vox,PP + Vox,194.03675,179.0,209.0,0.93925
+2026-11-16,PP + Vox + CC,PP + Vox + CC,195.44,181.0,210.0,0.951
+2026-11-16,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,152.37375,138.0,167.0,0.0295
+2026-11-16,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,147.68475,133.0,162.0,0.0175
+2026-11-16,PSOE + PP,PSOE + PP,239.9215,225.0,255.0,1.0
+2026-11-17,PP + Vox,PP + Vox,194.13575,180.0,209.0,0.94025
+2026-11-17,PP + Vox + CC,PP + Vox + CC,195.5065,181.0,210.0,0.94825
+2026-11-17,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,152.336,138.0,167.0,0.032
+2026-11-17,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,147.79,133.0,162.0,0.01575
+2026-11-17,PSOE + PP,PSOE + PP,240.43425,226.0,255.0,0.99975
+2026-11-18,PP + Vox,PP + Vox,193.9198,179.0,208.0,0.9373
+2026-11-18,PP + Vox + CC,PP + Vox + CC,195.2448,181.0,210.0,0.9467
+2026-11-18,Sánchez's 2023 investiture partners,PSOE + FA + FV + Podemos + ERC + Junts + Bildu + PNV + BNG + CC,152.7423,138.0,167.0,0.0334
+2026-11-18,"Same, without Junts",PSOE + FA + FV + Podemos + ERC + Bildu + PNV + BNG + CC,148.0752,133.0,162.0,0.0185
+2026-11-18,PSOE + PP,PSOE + PP,240.7664,226.0,255.0,0.9999

@@ -344,7 +344,7 @@ def build_methodology(site: Site) -> None:
 <h2>Corrections</h2>
 <p>When we find a mistake in our data or code, we fix it, rerun the forecast, and note the change on this page.</p>
 <h3>Changes</h3>
-<ul><li>November 14, 2026: the Spain forecast launched.</li><li>November 14, 2026: the US Senate model now estimates pollster leans, opinion drift and shared polling errors jointly. It replaced a model that blended a weighted poll average with fundamentals.</li></ul>
+<ul><li>November 18, 2026: Spain forecast: daily tracking polls and rolling panels now count once per non-overlapping fieldwork period, instead of every daily release counting as a new poll. The whole daily history was recomputed this way; the forecast barely moved.</li><li>November 14, 2026: the Spain forecast launched.</li><li>November 14, 2026: the US Senate model now estimates pollster leans, opinion drift and shared polling errors jointly. It replaced a model that blended a weighted poll average with fundamentals.</li></ul>
 </div>"""
     site.page("methodology/", "Methodology | Machine Learning Winds", "How Machine Learning Winds builds and tests its election forecasts.", body, "method")
 
@@ -386,8 +386,18 @@ def build(con: sqlite3.Connection, preview: bool = False) -> Path:
     chamber = pd.read_csv(config.OUTPUTS / "senate_2026_daily_chamber.csv")
     races = pd.read_csv(config.OUTPUTS / "senate_2026_daily_races.csv")
     table = ts.race_table()
-    sen, _ = ts.live_polls(con, 2026, table)
-    sen = sen[(sen["end_date"] >= "2026-08-04") & (sen["end_date"] <= "2026-11-03")]
+    # The race pages list each race's polls. Those come from the local database; a snapshot is saved
+    # so the site can be rebuilt without it (for example by the daily GitHub Action).
+    snap = config.OUTPUTS / "senate_2026_site_polls.csv"
+    try:
+        sen, _ = ts.live_polls(con, 2026, table)
+        sen = sen[(sen["end_date"] >= "2026-08-04") & (sen["end_date"] <= "2026-11-03")]
+        sen.to_csv(snap, index=False)
+    except Exception:
+        if not snap.exists():
+            raise
+        sen = pd.read_csv(snap, dtype={"poll_id": str, "start_date": str, "end_date": str},
+                          parse_dates=["available"])
     (DIST / "data").mkdir(exist_ok=True)
     for n in ("senate_2026_daily_chamber.csv", "senate_2026_daily_races.csv"):
         shutil.copyfile(config.OUTPUTS / n, DIST / "data" / n)

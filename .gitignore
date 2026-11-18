@@ -1,9 +1,23 @@
 # Large or regenerable data stays out of git
-data/raw/
+data/raw/*
 db/*.sqlite
 db/*.sqlite-journal
-outputs/
+outputs/*
 __pycache__/
 *.pyc
 .venv/
 .ipynb_checkpoints/
+
+# ...except what the daily Spain update needs to run on GitHub without this computer:
+# the Spain inputs (Wikipedia, CC BY-SA 4.0), the daily forecast history, and the files the site build reads.
+!data/raw/spain_data.json
+!data/raw/spain_constituency_grid.json
+!data/raw/spain_polls_2026_latest.json
+!outputs/spain_daily/
+!outputs/spain_2026_*.csv
+!outputs/spain_backtest_summary.csv
+!outputs/senate_2026_daily_chamber.csv
+!outputs/senate_2026_daily_races.csv
+!outputs/senate_dynamic_backtest_overall.csv
+!outputs/senate_backtest_by_horizon_overall.csv
+!outputs/senate_2026_site_polls.csv

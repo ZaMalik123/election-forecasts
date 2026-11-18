@@ -89,7 +89,7 @@ def poll_window(election: str, asof: date) -> pd.DataFrame:
     asof = pd.Timestamp(asof)
     p = p[(p["end"] + pd.Timedelta(days=RELEASE_LAG) <= asof)
           & (p["end"] >= asof - pd.Timedelta(days=LOOKBACK))]
-    return p
+    return D.drop_overlapping(p)
 
 
 def posterior(election: str, asof: date, prm: Params = Params(), passes: int = 2):

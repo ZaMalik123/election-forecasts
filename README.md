@@ -163,3 +163,16 @@ Model: exact Gaussian poll filter on national shares (multinomial-shaped drift, 
 effects; CIS gets a larger house effect; joint columns like FA+FV are read as sums), proportional swing
 to provinces with community and province shocks estimated from 2015–2023, raking back to the national
 draw, D'Hondt with a 3% constituency threshold. Party mapping per election is in `spain/data.py` (SPECS).
+
+### Automatic daily updates (GitHub Actions)
+
+`.github/workflows/spain-daily.yml` runs every day at 14:37 UTC (and on demand from the Actions tab):
+`fetch-spain-polls` → `spain-forecast` → `build-site` → commit and push, which makes Cloudflare redeploy.
+`fetch-spain-polls` refuses to overwrite the poll file if the parse looks broken (fewer than 20 polls,
+missing PP/PSOE/Vox columns, implausible values); the run then fails and GitHub emails you.
+After Nov 23 both steps do nothing, so the frozen forecast stays as published.
+
+Because the Action commits to `main`, click **Fetch origin / Pull** in GitHub Desktop before making
+your own changes. The Spain inputs, the daily history in `outputs/spain_daily/` and the files the site
+build reads are committed for this reason (see `.gitignore`); everything else in `data/raw` and
+`outputs` stays local.

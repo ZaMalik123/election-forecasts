@@ -1,0 +1,46 @@
+# Daily Spain 2026 update: fetch polls from Wikipedia, run the forecast, rebuild the site, push.
+# Cloudflare Pages redeploys on every push. After Nov 23 (Spain's poll publication ban) the fetch and
+# forecast steps do nothing, so no further commits are made. Disable the workflow after the election.
+name: Spain daily forecast
+
+on:
+  schedule:
+    - cron: "37 14 * * *"   # 14:37 UTC daily (15:37 in Madrid, 7:37 in Denver)
+  workflow_dispatch:         # "Run workflow" button for a manual update
+
+permissions:
+  contents: write
+
+concurrency:
+  group: spain-daily
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: pip install -r requirements.txt
+      - name: Fetch latest polls
+        run: python run.py fetch-spain-polls
+      - name: Run forecast
+        run: python run.py spain-forecast
+      - name: Build site
+        run: python run.py build-site
+      - name: Commit and push if anything changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data/raw outputs site/dist
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "Daily Spain forecast update ($(date -u +%Y-%m-%d))"
+            git push
+          fi

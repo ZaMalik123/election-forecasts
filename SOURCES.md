@@ -21,3 +21,10 @@ Wikipedia tables are CC BY-SA: allowed, but derived tables must carry the same l
 - English Wikipedia, CC BY-SA 4.0: "Results of the {2015, 2016, April 2019, November 2019, 2023} Spanish Congress election",
   "Opinion polling for the {2016 … 2026} Spanish general election", "2026 Spanish general election" (seat allocation).
   Page revision IDs are stored inside the JSON files. Underlying results: Spanish Ministry of the Interior.
+
+## Maps
+- Spain constituency boundaries: Natural Earth 1:10m admin-1 states and provinces (public domain, naturalearthdata.com),
+  projected with the Canary Islands inset from d3-composite-projections (BSD-3-Clause). Saved as `src/forecast/site/es_provinces.json`.
+- US state boundaries: us-atlas 3.0.1 (ISC licence), derived from US Census Bureau cartographic boundary files (public domain).
+  Saved as `src/forecast/site/us_states.json`.
+Both are free for commercial use, including on an ad-supported site.
