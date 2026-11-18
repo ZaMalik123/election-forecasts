@@ -157,6 +157,7 @@ def build(site) -> dict:
 <h2>The forecast, seat by seat</h2>
 <p class="prose">Each simulation draws a national result from the polls, spreads it across the 52 constituencies, and allocates seats with the D'Hondt method, as in the real count.</p>
 {map_figure(prov, latest)}
+{png_link(asof)}
 <h2>Parties</h2>
 {party_tbl}
 <p class="small">Ranges cover the middle 80% of 10,000 simulations. Compromís–FV runs only in the Valencian Community and includes Podemos there; elsewhere Podemos runs alone. UPN runs inside the PP list in Navarre.</p>
@@ -188,7 +189,7 @@ _ES = None
 
 # Constituencies whose dots don't fit inside them get a labeled box with a leader line:
 # (box x, box y, columns). Coordinates are in the map's own units (760 x 560 frame).
-CALLOUTS = {"Madrid": (30, 150, 10), "Barcelona": (735, 55, 8), "Biscay": (395, -48, 4), "Gipuzkoa": (480, -48, 3)}
+CALLOUTS = {"Madrid": (30, 150, 10), "Barcelona": (735, 55, 8), "Biscay": (395, -48, 4), "Gipuzkoa": (470, -36, 6)}
 PITCH, R = 7.0, 2.9            # dots drawn inside provinces
 BPITCH, BR = 9.0, 3.6          # dots in callout boxes
 TOP, RIGHT, BAR_H = 70, 130, 92  # extra room above (Basque callouts), right (Barcelona), and below (seat bar)
@@ -294,7 +295,8 @@ def seat_map(prov: pd.DataFrame, latest: pd.DataFrame) -> str:
         if provn in CALLOUTS:
             bx, by_, cols = CALLOUTS[provn]
             rows = -(-M // cols)
-            bw, bh = cols * BPITCH + 10, rows * BPITCH + 26
+            # wide enough for the dots and for the name (about 6.6 units per bold 11px character)
+            bw, bh = max(cols * BPITCH + 10, len(provn) * 6.6 + 14), rows * BPITCH + 26
             # leader line from the province to the nearest edge of the box
             ex = min(max(geo["cx"], bx), bx + bw)
             ey = min(max(geo["cy"], by_), by_ + bh)
@@ -346,3 +348,71 @@ def map_figure(prov: pd.DataFrame, latest: pd.DataFrame) -> str:
             'color of the party with the most seats, deeper where it takes a larger share. Madrid, Barcelona, Biscay and '
             'Gipuzkoa are drawn in boxes because their dots don\'t fit; the Canary Islands are in the inset. Select a '
             'constituency for its average seats by party. Boundaries: Natural Earth (public domain).</figcaption></figure>')
+
+
+# ------------------------------------------------------------------------ downloadable image
+
+PNG_NAME = "spain-2026-forecast.png"
+
+
+def png_link(asof: str) -> str:
+    """Download link, shown only once the image has been rendered (python run.py render-png)."""
+    from .build import DIST
+    if not (DIST / "spain" / "2026" / PNG_NAME).exists():
+        return ""
+    return (f'<p class="download"><a href="{PNG_NAME}" download="spain-2026-forecast-{asof}.png">Download this map as an image (PNG)</a>'
+            ' <span class="small">Free to share with credit to Machine Learning Winds.</span></p>')
+
+
+def poster_html() -> str:
+    """A self-contained page laid out as a shareable image: title, headline odds, the seat map and bar."""
+    import re
+    from pathlib import Path
+    from .build import SITE
+    daily, dblocs, latest, blocs, prov, close = load()
+    asof = daily["date"].max()
+    bl = blocs.set_index("bloc")
+    right, left = bl.at["PP + Vox", "p_majority"], bl.at["Sánchez's 2023 investiture partners", "p_majority"]
+    fig = map_figure(prov, latest)
+    fig = re.sub(r'<div class="tip"[^>]*></div>', "", fig)
+    fig = re.sub(r"<figcaption>.*?</figcaption>", "", fig, flags=re.S)
+    css = (SITE / "static" / "style.css").read_text(encoding="utf-8")
+    fonts = "".join(
+        f"@font-face{{font-family:'Schibsted Grotesk';font-weight:{w};"
+        f"src:url('{(SITE / 'static' / 'fonts' / f'schibsted-grotesk-latin-{w}-normal.woff2').resolve().as_uri()}') format('woff2');}}"
+        for w in (400, 600, 700, 800))
+    when = svg.nice_date(asof, True)
+    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><style>{fonts}{css}
+body{{margin:0;background:var(--page)}} .card{{width:1000px;padding:40px 48px 30px;box-sizing:border-box}}
+.card h1{{font-size:44px;margin:0 0 6px}} .sub{{font-size:19px;color:var(--muted);margin:0}}
+.stats{{display:flex;gap:40px;margin:18px 0 0}} .stats div{{border-top:4px solid var(--c);padding-top:8px}}
+.stats b{{display:block;font-size:40px;font-weight:800;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}}
+.stats span{{font-size:14px;color:var(--muted)}} .esmap svg{{max-width:none}} figure.chart{{margin:6px 0 0}}
+.foot{{display:flex;justify-content:space-between;gap:24px;font-size:13px;color:var(--muted);border-top:1px solid var(--rule);padding-top:10px;margin-top:14px}}
+.foot b{{white-space:nowrap;color:var(--ink)}}
+</style></head><body><div class="card">
+<h1>2026 Spanish General Election Forecast</h1>
+<p class="sub">Projected seats in the Congress of Deputies, one dot per seat. Election day: November 29, 2026.</p>
+<div class="stats"><div style="--c: var(--pp)"><b>{pct(right)}</b><span>chance PP + Vox reach 176 seats</span></div>
+<div style="--c: var(--psoe)"><b>{pct(left)}</b><span>chance Sánchez's 2023 investiture partners do</span></div></div>
+{fig}
+<div class="foot"><span>Forecast as of {when}. Average of 10,000 simulations; seats rounded per constituency. Boundaries: Natural Earth.</span><b>forecasts.machinelearningwinds.com</b></div>
+</div></body></html>"""
+
+
+def render_png() -> "Path":
+    """Render poster_html() to site/dist/spain/2026/spain-2026-forecast.png (needs Playwright + Chromium)."""
+    from playwright.sync_api import sync_playwright
+    from .build import DIST
+    page_file = config.OUTPUTS / "spain_2026_poster.html"
+    page_file.write_text(poster_html(), encoding="utf-8")
+    out = DIST / "spain" / "2026" / PNG_NAME
+    out.parent.mkdir(parents=True, exist_ok=True)
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page(viewport={"width": 1000, "height": 900}, device_scale_factor=2, color_scheme="light")
+        page.goto(page_file.resolve().as_uri())
+        page.wait_for_timeout(500)
+        page.locator(".card").screenshot(path=str(out))
+        browser.close()
+    return out

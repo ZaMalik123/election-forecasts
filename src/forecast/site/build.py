@@ -383,8 +383,7 @@ def build(con: sqlite3.Connection, preview: bool = False) -> Path:
     site = Site(preview)
     static = DIST / "static"
     static.mkdir(exist_ok=True)
-    for f in (SITE / "static").iterdir():
-        shutil.copyfile(f, static / f.name)
+    shutil.copytree(SITE / "static", static, dirs_exist_ok=True)
     (static / "favicon.svg").write_text(
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20"><g fill="none" stroke="#2f62c9" stroke-width="2.4" stroke-linecap="round">'
         '<path d="M2 5h17a3 3 0 1 0-3-3"/><path d="M2 10h24a3 3 0 1 1-3 3"/><path d="M2 15h11"/></g></svg>', encoding="utf-8")

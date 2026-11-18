@@ -27,7 +27,7 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0; background: var(--page); color: var(--ink);
   font-family: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
-  font-size: 17px; line-height: 1.55; font-variant-numeric: tabular-nums;
+  font-size: 17px; line-height: 1.55;
 }
 a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 a:hover { text-decoration-thickness: 2px; }
@@ -202,3 +202,10 @@ figure.map svg { max-width: 920px; }
 .esmap .nbar .n { font-size: 12px; font-weight: 700; fill: #fff; text-anchor: middle; }
 .esmap .nbar .maj { stroke: var(--ink); stroke-width: 2; }
 .esmap .nbar .majl { font-size: 11px; font-weight: 600; fill: var(--ink); text-anchor: middle; }
+
+/* Tabular figures only where numbers line up; in running text they also widen commas and periods. */
+td.num, .chance .n, figure.chart svg text, .tip, .seatkey b { font-variant-numeric: tabular-nums; }
+.esmap .nbar .ttl { font-variant-numeric: normal; }
+.download { margin: 4px 0 0; }
+.download a { font-weight: 600; }
+.download .small { margin-left: 8px; }

@@ -176,3 +176,9 @@ Because the Action commits to `main`, click **Fetch origin / Pull** in GitHub De
 your own changes. The Spain inputs, the daily history in `outputs/spain_daily/` and the files the site
 build reads are committed for this reason (see `.gitignore`); everything else in `data/raw` and
 `outputs` stays local.
+
+### Downloadable map image
+
+`python run.py render-png` renders the Spain seat map as `site/dist/spain/2026/spain-2026-forecast.png`
+(needs `pip install playwright` and `python -m playwright install chromium`). The daily Action does
+this before building the site; the Spain page links to the image whenever it exists.

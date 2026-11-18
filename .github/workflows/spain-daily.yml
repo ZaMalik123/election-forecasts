@@ -31,6 +31,12 @@ jobs:
         run: python run.py fetch-spain-polls
       - name: Run forecast
         run: python run.py spain-forecast
+      - name: Render the downloadable map image
+        continue-on-error: true    # the site still updates if the image step fails
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+          python run.py render-png
       - name: Build site
         run: python run.py build-site
       - name: Commit and push if anything changed

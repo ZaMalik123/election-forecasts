@@ -153,6 +153,11 @@ def cmd_spain_forecast(con, args):
     print("Latest forecast written to outputs/spain_2026_*.csv")
 
 
+def cmd_render_png(con, args):
+    from forecast.site import spain as sp
+    print(f"Wrote {sp.render_png()}")
+
+
 def cmd_build_site(con, args):
     from forecast.site import build
     out = build.build(con, preview=args.preview)
@@ -208,6 +213,7 @@ def main(argv=None):
     sub.add_parser("load-raw")
     p = sub.add_parser("spain-backtest", help="backtest the Spain model")
     p.add_argument("--sims", type=int, default=4000)
+    sub.add_parser("render-png", help="render the Spain map as a downloadable PNG (needs Playwright)")
     p = sub.add_parser("fetch-spain-polls", help="download the current Spain 2026 poll table from Wikipedia")
     p.add_argument("--force", action="store_true", help="fetch even after the Nov 23 freeze")
     p = sub.add_parser("spain-forecast", help="daily Spain 2026 forecast")
