@@ -154,11 +154,9 @@ def build(site) -> dict:
   <div class="chance" style="--c: var(--psoe)"><div class="n">{pct(left.p_majority)}</div><div class="l">chance the parties that backed Sánchez in 2023 win 176 or more</div></div>
   <div class="chance" style="--c: var({COLOR[lead]})"><div class="n">{pct(lp.at[lead, 'p_largest'])}</div><div class="l">chance {'the PP' if lead == 'PP' else 'the PSOE'} wins the most seats</div></div>
 </div>
-<h2>Average seats in our simulations</h2>
-<p class="prose">Each simulation draws a national result from the polls, spreads it across the 52 constituencies, and allocates seats with the D'Hondt method. Parties run from left to right.</p>
-{seat_bar(latest)}
-<h2>Who leads where</h2>
-{map_figure(prov)}
+<h2>The forecast, seat by seat</h2>
+<p class="prose">Each simulation draws a national result from the polls, spreads it across the 52 constituencies, and allocates seats with the D'Hondt method, as in the real count.</p>
+{map_figure(prov, latest)}
 <h2>Parties</h2>
 {party_tbl}
 <p class="small">Ranges cover the middle 80% of 10,000 simulations. Compromís–FV runs only in the Valencian Community and includes Podemos there; elsewhere Podemos runs alone. UPN runs inside the PP list in Navarre.</p>
@@ -187,62 +185,163 @@ def build(site) -> dict:
 
 _ES = None
 
+# Constituencies whose dots don't fit inside them get a labeled box with a leader line:
+# (box x, box y, columns). Coordinates are in the map's own units (760 x 560 frame).
+CALLOUTS = {"Madrid": (30, 150, 10), "Barcelona": (735, 55, 8), "Biscay": (395, -48, 4), "Gipuzkoa": (480, -48, 3)}
+PITCH, R = 7.0, 2.9            # dots drawn inside provinces
+BPITCH, BR = 9.0, 3.6          # dots in callout boxes
+TOP, RIGHT, BAR_H = 70, 130, 92  # extra room above (Basque callouts), right (Barcelona), and below (seat bar)
 
-def lead_fill(party: str, p: float) -> str:
-    """Party color, paler when the lead is less certain (three steps keep it readable)."""
-    strength = 100 if p >= 0.85 else 62 if p >= 0.6 else 30
+
+def _geo():
+    global _ES
+    if _ES is None:
+        import json
+        from pathlib import Path
+        _ES = json.loads(Path(__file__).with_name("es_provinces.json").read_text(encoding="utf-8"))
+    return _ES
+
+
+def seat_allocation(prov: pd.DataFrame) -> pd.DataFrame:
+    """Whole seats per constituency and party, from average simulated seats.
+
+    Each party gets the integer part of its average seats in each constituency; the constituency's
+    remaining seats go to the largest remainders, preferring parties still short of their rounded
+    national total, so the dots add up to each constituency's seats and (almost always) to each
+    party's rounded national average.
+    """
+    m = prov.pivot_table(index="province", columns="party", values="seats_mean", aggfunc="sum").fillna(0.0)
+    seats = prov.groupby("province")["seats"].first().reindex(m.index)
+    nat = m.sum()
+    target = nat.apply(int)
+    left = int(seats.sum() - target.sum())
+    for k in (nat - target).sort_values(ascending=False).index[:left]:
+        target[k] += 1
+    x = m.apply(lambda col: col.apply(int))
+    rem = m - x
+    need_row = seats - x.sum(1)
+    need_col = target - x.sum()
+    cand = sorted(((rem.at[c, k], c, k) for c in m.index for k in m.columns if rem.at[c, k] > 0), reverse=True)
+    for _, c, k in cand:
+        if need_row[c] > 0 and need_col[k] > 0:
+            x.at[c, k] += 1
+            need_row[c] -= 1
+            need_col[k] -= 1
+    for c in m.index:                       # rare dead ends: fill by remainder alone
+        while need_row[c] > 0:
+            k = (rem.loc[c] - x.loc[c] + m.loc[c].apply(int)).idxmax()
+            x.at[c, k] += 1
+            rem.at[c, k] = -1
+            need_row[c] -= 1
+    return x.astype(int)
+
+
+def dominance_fill(party: str, frac: float) -> str:
+    """Province color: the party with the most seats there, deeper the larger its share of the seats."""
+    strength = 100 if frac >= 0.65 else 75 if frac >= 0.5 else 50 if frac >= 0.35 else 28
     return f"color-mix(in oklab, var({COLOR[party]}) {strength}%, var(--map-none))"
 
 
-def province_map(prov: pd.DataFrame) -> tuple[str, list[str]]:
-    """Choropleth: each province in the color of the party most likely to get the most votes there."""
-    global _ES
-    if _ES is None:
-        from pathlib import Path
-        import json
-        _ES = json.loads(Path(__file__).with_name("es_provinces.json").read_text(encoding="utf-8"))
-    W, H = _ES["width"], _ES["height"]
-    out = [f'<svg viewBox="0 0 {W} {H}" role="img" aria-label="Map of Spain\'s 52 constituencies, colored by the party most likely to win the most votes in each">']
-    leaders = []
-    dots = []
-    for provn, g in prov.groupby("province", sort=False):
-        lead = g.loc[g["p_first"].idxmax()]
-        leaders.append(lead.party)
-        seats = int(g["seats"].iat[0])
+def _dots(parties: list[str], x0: float, y0: float, cols: int, pitch: float, r: float, center=True) -> str:
+    n = len(parties)
+    cols = max(1, min(cols, n))
+    rows = -(-n // cols)
+    out = []
+    for i, k in enumerate(parties):
+        row, col = divmod(i, cols)
+        in_row = cols if row < rows - 1 else n - cols * (rows - 1)
+        off = (cols - in_row) * pitch / 2 if center else 0
+        if center:
+            x = x0 - (cols - 1) * pitch / 2 + col * pitch + off
+            y = y0 - (rows - 1) * pitch / 2 + row * pitch
+        else:
+            x, y = x0 + col * pitch + off, y0 + row * pitch
+        out.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" style="fill: var({COLOR[k]})"/>')
+    return "".join(out)
+
+
+def seat_map(prov: pd.DataFrame, latest: pd.DataFrame) -> str:
+    G = _geo()
+    W, H = G["width"], G["height"]
+    alloc = seat_allocation(prov)
+    by = {p: g for p, g in prov.groupby("province", sort=False)}
+    vb = f"0 {-TOP} {W + RIGHT} {H + TOP + BAR_H}"
+    out = [f'<svg viewBox="{vb}" role="img" aria-label="Map of Spain\'s 52 constituencies with one dot per seat, colored by party, and national seat totals">']
+    shapes, dotlayer, boxes = [], [], []
+    for provn, geo in G["provinces"].items():
+        if provn not in alloc.index:
+            continue
+        a = alloc.loc[provn]
+        g = by[provn]
+        M = int(g["seats"].iat[0])
+        lead = a.idxmax() if a.max() > 0 else g.loc[g["seats_mean"].idxmax(), "party"]
+        frac = g.set_index("party")["seats_mean"].get(lead, 0) / M
         top = g[g["seats_mean"] >= 0.3].sort_values("seats_mean", ascending=False)
         lines = "".join(f'<span style="--c: var({COLOR[r.party]})"><em>{E(name(r.party))}</em>{r.seats_mean:.1f}</span>'
                         for r in top.itertuples())
-        tip = (f"<b>{E(provn)} · {seats} seat{'s' if seats != 1 else ''}</b>"
-               f"<small>{E(name(lead.party))} wins the most votes in {pct(lead.p_first)} of simulations. Average seats:</small>{lines}")
-        aria = f"{provn}, {seats} seats: {name(lead.party)} most votes, {pct(lead.p_first)} chance"
-        fill = lead_fill(lead.party, lead.p_first)
-        geo = _ES["provinces"].get(provn)
-        if geo is None:
-            continue
+        tip = f"<b>{E(provn)} · {M} seat{'s' if M != 1 else ''}</b><small>Average seats in our simulations:</small>{lines}"
+        aria = f"{provn}, {M} seats: " + ", ".join(f"{name(k)} {v}" for k, v in a[a > 0].sort_values(ascending=False).items())
         attrs = f'tabindex="0" data-tip="{E(tip)}" aria-label="{E(aria)}"'
+        fill = dominance_fill(lead, frac)
+        seat_parties = [k for k in SPECTRUM for _ in range(int(a.get(k, 0)))]
         if provn in ("Ceuta", "Melilla"):
-            # far too small to see at this scale: draw a marked square next to the city
             x, y = geo["cx"], geo["cy"]
-            dots.append(f'<g class="city" {attrs}><rect class="st" x="{x - 9:.1f}" y="{y - 9:.1f}" width="18" height="18" rx="3" style="fill: {fill}"/>'
-                        f'<text x="{x + 14:.1f}" y="{y + 5:.1f}">{provn}</text></g>')
+            dotlayer.append(f'<g {attrs} class="city"><circle cx="{x}" cy="{y}" r="5" class="ring" style="fill: var({COLOR[seat_parties[0]]})"/>'
+                            f'<text x="{x + 9}" y="{y + 4}">{provn}</text></g>')
+            continue
+        shapes.append(f'<path class="st" {attrs} d="{geo["d"]}" style="fill: {fill}"/>')
+        if provn in CALLOUTS:
+            bx, by_, cols = CALLOUTS[provn]
+            rows = -(-M // cols)
+            bw, bh = cols * BPITCH + 10, rows * BPITCH + 26
+            # leader line from the province to the nearest edge of the box
+            ex = min(max(geo["cx"], bx), bx + bw)
+            ey = min(max(geo["cy"], by_), by_ + bh)
+            boxes.append(f'<g class="callout" {attrs}><line x1="{geo["cx"]}" y1="{geo["cy"]}" x2="{ex:.1f}" y2="{ey:.1f}"/>'
+                         f'<rect x="{bx}" y="{by_}" width="{bw:.0f}" height="{bh:.0f}" rx="4"/>'
+                         f'<text x="{bx + 6}" y="{by_ + 14}">{E(provn)}</text>'
+                         + _dots(seat_parties, bx + 5 + BPITCH / 2, by_ + 20 + BPITCH / 2, cols, BPITCH, BR, center=False) + "</g>")
         else:
-            out.append(f'<path class="st" {attrs} d="{geo["d"]}" style="fill: {fill}"/>')
-    out.append(f'<path class="inset" d="{_ES["inset"]}"/>')
-    out += dots
+            cols = {1: 1, 2: 2, 3: 3, 4: 2, 5: 3, 6: 3, 7: 4, 8: 4}.get(M, 4 if M <= 16 else 5)
+            dotlayer.append(_dots(seat_parties, geo["cx"], geo["cy"], cols, PITCH, R))
+    out += shapes
+    out.append(f'<path class="inset" d="{G["inset"]}"/>')
+    out.append('<g class="dots">' + "".join(dotlayer) + "</g>")
+    out += boxes
+
+    # national seat bar, built from the same dots so the image adds up
+    tot = alloc.sum()
+    x0, x1, y = 20, W + RIGHT - 20, H + 34
+    scale = (x1 - x0) / tot.sum()
+    x = x0
+    out.append(f'<g class="nbar"><text class="ttl" x="{x0}" y="{H + 18}">Seats in the map, all 350</text>')
+    for k in SPECTRUM:
+        n = int(tot.get(k, 0))
+        if n == 0:
+            continue
+        w = n * scale
+        out.append(f'<rect x="{x:.1f}" y="{y}" width="{max(w - 2, 1):.1f}" height="26" style="fill: var({COLOR[k]})"><title>{E(name(k))}: {n}</title></rect>')
+        if w >= 26:
+            out.append(f'<text class="n" x="{x + w / 2 - 1:.1f}" y="{y + 18}">{n}</text>')
+        x += w
+    mx = x0 + 176 * scale - 1
+    out.append(f'<line class="maj" x1="{mx:.1f}" x2="{mx:.1f}" y1="{y - 8}" y2="{y + 34}"/>'
+               f'<text class="majl" x="{mx:.1f}" y="{y + 48}">176 for a majority</text></g>')
     out.append("</svg>")
-    return "".join(out), list(dict.fromkeys(leaders))
+    return "".join(out), tot
 
 
-def map_figure(prov: pd.DataFrame) -> str:
-    svg_, leaders = province_map(prov)
-    order = [k for k in SPECTRUM if k in leaders]
-    parties = "".join(f'<li style="--c: var({COLOR[k]})"><i></i>{E(name(k))}</li>' for k in order)
-    k0 = "PP" if "PP" in order else order[0]
-    steps = "".join(f'<span class="step" style="background: {lead_fill(k0, p)}"></span>{lab}'
-                    for p, lab in [(0.5, "under 60%"), (0.7, "60–85%"), (0.9, "85% or more")])
+def map_figure(prov: pd.DataFrame, latest: pd.DataFrame) -> str:
+    svg_, tot = seat_map(prov, latest)
+    key = "".join(f'<li style="--c: var({COLOR[k]})"><i></i>{E(name(k))} <b>{int(tot[k])}</b></li>'
+                  for k in SPECTRUM if tot.get(k, 0) > 0)
+    steps = "".join(f'<span class="step" style="background: {dominance_fill("PP", f)}"></span>{lab}'
+                    for f, lab in [(0.3, "under 35%"), (0.4, "35–50%"), (0.55, "50–65%"), (0.7, "65% or more")])
     return (f'<figure class="chart map esmap" data-map>{svg_}<div class="tip" aria-hidden="true"></div>'
-            f'<ul class="seatkey">{parties}</ul>'
-            f'<p class="small certainty">Chance of winning the most votes: {steps}</p>'
-            '<figcaption>Each constituency is colored by the party most likely to win the most votes there; paler shades mean '
-            'that lead is less certain. Select a constituency for its average seats by party. The Canary Islands are shown '
-            'in the inset; Ceuta and Melilla are marked with squares. Boundaries: Natural Earth (public domain).</figcaption></figure>')
+            f'<ul class="seatkey">{key}</ul>'
+            f'<p class="small certainty">Province shading, the leading party\'s share of the seats: {steps}</p>'
+            '<figcaption>One dot per seat. Each constituency\'s seats are colored by party, rounding each party\'s average '
+            'seats there in 10,000 simulations, so the map adds up to the totals in the bar. Provinces are shaded in the '
+            'color of the party with the most seats, deeper where it takes a larger share. Madrid, Barcelona, Biscay and '
+            'Gipuzkoa are drawn in boxes because their dots don\'t fit; the Canary Islands are in the inset. Select a '
+            'constituency for its average seats by party. Boundaries: Natural Earth (public domain).</figcaption></figure>')

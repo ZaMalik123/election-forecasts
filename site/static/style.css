@@ -192,3 +192,13 @@ figure.map svg { max-width: 920px; }
 .esmap .certainty { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin-top: 8px; }
 .esmap .step { display: inline-block; width: 18px; height: 12px; border-radius: 2px; margin-left: 6px; }
 .tip small { display: block; color: var(--muted); font-size: 12px; margin: 2px 0 4px; }
+.esmap svg { max-width: 900px; }
+.esmap .dots circle, .esmap .callout circle, .esmap .city .ring { stroke: var(--map-edge); stroke-width: .8; pointer-events: none; }
+.esmap .callout rect { fill: var(--surface); stroke: var(--rule); }
+.esmap .callout line { stroke: var(--muted); stroke-width: 1; }
+.esmap .callout text, .esmap .city text { font-size: 11px; font-weight: 600; fill: var(--ink); }
+.esmap .callout:hover rect, .esmap .callout:focus rect { stroke: var(--ink); stroke-width: 1.5; }
+.esmap .nbar .ttl { font-size: 12px; fill: var(--muted); }
+.esmap .nbar .n { font-size: 12px; font-weight: 700; fill: #fff; text-anchor: middle; }
+.esmap .nbar .maj { stroke: var(--ink); stroke-width: 2; }
+.esmap .nbar .majl { font-size: 11px; font-weight: 600; fill: var(--ink); text-anchor: middle; }
