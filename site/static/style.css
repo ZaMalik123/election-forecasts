@@ -1,3 +1,9 @@
+/* Fonts are served from this site (SIL Open Font License, see fonts/OFL.txt). */
+@font-face { font-family: "Schibsted Grotesk"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/schibsted-grotesk-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Schibsted Grotesk"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/schibsted-grotesk-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Schibsted Grotesk"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/schibsted-grotesk-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Schibsted Grotesk"; font-style: normal; font-weight: 800; font-display: swap; src: url("fonts/schibsted-grotesk-latin-800-normal.woff2") format("woff2"); }
+
 /* Machine Learning Winds — Forecasts. One family (Schibsted Grotesk), party colors carry identity. */
 :root {
   color-scheme: light;

@@ -53,9 +53,6 @@ class Site:
 <link rel="canonical" href="{BASE_URL}/{rel_dir}">
 <meta property="og:title" content="{E(title)}">
 <meta property="og:description" content="{E(description)}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{h('static/style.css')}">
 <link rel="icon" href="{h('static/favicon.svg')}" type="image/svg+xml">
 </head>
@@ -363,9 +360,17 @@ def build_static_pages(site: Site) -> None:
 <h2>Contact</h2>
 <p>Questions, corrections and press inquiries: <a href="mailto:research.fellow@machinelearningwinds.com">research.fellow@machinelearningwinds.com</a></p></div>"""
     privacy = """<div class="prose"><h1>Privacy</h1>
-<p class="lede">Draft policy, to be reviewed before launch.</p>
-<p>This site does not use cookies, accounts or tracking scripts. Our hosting provider keeps standard server logs, such as IP addresses and pages requested, to run and protect the site.</p>
-<p>If we add analytics or advertising, we will update this page first and ask for consent where the law requires it.</p></div>"""
+<p class="lede">Last updated November 18, 2026.</p>
+<h2>What we collect</h2>
+<p>We use <a href="https://www.cloudflare.com/web-analytics/">Cloudflare Web Analytics</a> to count visits: which pages are viewed, how visitors arrived (for example from a search engine or a link), and their country, browser and type of device. It does not use cookies, does not store anything on your device, and does not track you across other websites. We see only totals, never individual visitors.</p>
+<p>Our hosting provider, Cloudflare, also keeps standard server logs, such as IP addresses and the pages requested, to run the site and protect it from abuse.</p>
+<p>The site has no accounts, comment forms or newsletters, so we do not collect names or email addresses. If you email us, we use your message only to reply.</p>
+<h2>What we don't do</h2>
+<p>We don't sell or share visitor data, and we don't use advertising or tracking cookies. Fonts and all other files are served from this site, not from third parties.</p>
+<h2>Changes</h2>
+<p>If we add advertising or other services that collect data, we will update this page first and ask for your consent where the law requires it.</p>
+<h2>Contact</h2>
+<p>Questions about privacy: <a href="mailto:research.fellow@machinelearningwinds.com">research.fellow@machinelearningwinds.com</a></p></div>"""
     terms = """<div class="prose"><h1>Terms</h1>
 <p class="lede">Draft terms, to be reviewed before launch.</p>
 <p>Forecasts are provided for information only. They are estimates with real uncertainty and are not advice of any kind, including financial or betting advice.</p>
