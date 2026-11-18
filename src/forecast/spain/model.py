@@ -77,7 +77,7 @@ def prior(election: str, prm: Params) -> tuple[np.ndarray, np.ndarray, list[str]
         if k in PRIOR_SPLIT:
             m0[k] *= PRIOR_SPLIT[k]
             extra[i] = prm.new_sd ** 2
-    m0 = m0.to_numpy()
+    m0 = m0.to_numpy().copy()
     if m0.sum() > 0.97:
         m0 *= 0.97 / m0.sum()
     P0 = prm.kappa * shape(m0) + np.diag(extra)

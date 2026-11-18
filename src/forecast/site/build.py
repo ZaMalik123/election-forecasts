@@ -93,6 +93,11 @@ def pct(p: float) -> str:
     return f"{p * 100:.0f}%"
 
 
+def article(p: str) -> str:
+    """'an' before 8%, 11%, 18%, 80-89% ("an eighty-one percent chance"), else 'a'."""
+    return "an" if p[0] == "8" or p in ("11%", "18%") else "a"
+
+
 def last_name(name: str) -> str:
     return name.split()[-1] if name else ""
 
@@ -120,7 +125,7 @@ def build_home(site: Site, chamber: pd.DataFrame, es: dict) -> None:
 <section class="feature">
   <div>
     <h1>Spain votes on November 29</h1>
-    <p class="lede">{lead} has a {pct(es['lead_p'])} chance of winning the most seats in the Congress of Deputies. The bigger question is whether any bloc reaches the 176 seats needed for a majority.</p>
+    <p class="lede">{lead} has {article(pct(es['lead_p']))} {pct(es['lead_p'])} chance of winning the most seats in the Congress of Deputies. The bigger question is whether any bloc reaches the 176 seats needed for a majority.</p>
     <p class="when">{status}</p>
     <p><a class="btn" href="{site.href('spain/2026/', 0)}">See the Spain forecast</a></p>
   </div>
@@ -129,7 +134,7 @@ def build_home(site: Site, chamber: pd.DataFrame, es: dict) -> None:
     <div class="chance" style="--c: var(--psoe)"><div class="n">{pct(es['left'])}</div><div class="l">chance the parties that backed Sánchez in 2023 do</div></div>
   </div>
 </section>
-<section style="padding-bottom: 32px; border-bottom: 1px solid var(--rule)">{spain_pages.seat_bar(es['latest'])}<p class="small">Average seats in 10,000 simulations, parties ordered from left to right. The line marks 176.</p></section>
+<section style="padding-bottom: 32px; border-bottom: 1px solid var(--rule)">{es['map']}</section>
 <section class="archive">
   <div>
     <h2 style="margin-top:0">US Senate 2026, backtested</h2>

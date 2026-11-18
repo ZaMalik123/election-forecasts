@@ -178,7 +178,8 @@ def build(site) -> dict:
               f"Daily forecast of Spain's November 29, 2026 general election: seats for every party and the chance of a 176-seat majority.",
               body, "home")
     return {"asof": asof, "right": right.p_majority, "left": left.p_majority, "lead": lead,
-            "lead_p": lp.at[lead, "p_largest"], "latest": latest, "frozen": frozen}
+            "lead_p": lp.at[lead, "p_largest"], "latest": latest, "frozen": frozen,
+            "map": map_figure(prov, latest)}
 
 
 # ------------------------------------------------------------------------------------- map
